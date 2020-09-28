@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ThreadsController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/threads', [ThreadsController::class, 'index']);
-
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/threads', [ThreadsController::class, 'index']);
