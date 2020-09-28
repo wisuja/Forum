@@ -25,4 +25,17 @@ class ThreadsTest extends TestCase
         $this->get('/threads')
             ->assertSee($thread->title);
     }
+
+    /**
+     * test_a_user_can_view_a_single_thread
+     *
+     * @return void
+     */
+
+    public function test_a_user_can_view_a_single_thread()
+    {
+        $thread = Thread::factory()->create();
+        $this->get("/threads/{$thread->id}")
+            ->assertSee($thread->id);
+    }
 }
