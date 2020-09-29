@@ -5,7 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card mt-3">
-                <div class="card-header">{{ $thread->title }}</div>
+                <div class="card-header">
+                    <a href="#">{{ $thread->creator->name }}</a> posted:
+                    {{ $thread->title }}
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -13,7 +16,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     {{ $thread->body }}
                 </div>
             </div>
