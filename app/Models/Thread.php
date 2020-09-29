@@ -9,6 +9,8 @@ class Thread extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function path()
     {
         return "/threads/$this->id";
@@ -22,5 +24,10 @@ class Thread extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function addReply($reply)
+    {
+        return $this->replies()->create($reply);
     }
 }
