@@ -21,6 +21,16 @@ class ThreadsTest extends TestCase
     }
 
     /**
+     * test_a_thread_can_make_a_string_path
+     *
+     * @return void
+     */
+    public function test_a_thread_can_make_a_string_path()
+    {
+        $this->assertEquals("/threads/{$this->thread->channel->name}/{$this->thread->id}", $this->thread->path());
+    }
+
+    /**
      * test_a_thread_has_a_creator
      *
      * @return void
@@ -55,6 +65,11 @@ class ThreadsTest extends TestCase
         $this->assertCount(1, $this->thread->replies);
     }
 
+    /**
+     * test_a_thread_belongs_to_a_channel
+     *
+     * @return void
+     */
     public function test_a_thread_belongs_to_a_channel()
     {
         $this->assertInstanceOf(Channel::class, $this->thread->channel);
