@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Channel;
 use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -20,16 +21,6 @@ class ThreadsTest extends TestCase
     }
 
     /**
-     * test_a_thread_has_replies
-     *
-     * @return void
-     */
-    public function test_a_thread_has_replies()
-    {
-        $this->assertInstanceOf(Collection::class, $this->thread->replies);
-    }
-
-    /**
      * test_a_thread_has_a_creator
      *
      * @return void
@@ -37,6 +28,16 @@ class ThreadsTest extends TestCase
     public function test_a_thread_has_a_creator()
     {
         $this->assertInstanceOf(User::class, $this->thread->creator);
+    }
+
+    /**
+     * test_a_thread_has_replies
+     *
+     * @return void
+     */
+    public function test_a_thread_has_replies()
+    {
+        $this->assertInstanceOf(Collection::class, $this->thread->replies);
     }
 
     /**
@@ -52,5 +53,10 @@ class ThreadsTest extends TestCase
         ]);
 
         $this->assertCount(1, $this->thread->replies);
+    }
+
+    public function test_a_thread_belongs_to_a_channel()
+    {
+        $this->assertInstanceOf(Channel::class, $this->thread->channel);
     }
 }
