@@ -16,11 +16,11 @@ class ParticipateInForumTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * test_an_authenticated_user_can_participate_in_a_forum
+     * test_an_authenticated_user_can_add_a_reply_in_a_thread
      *
      * @return void
      */
-    public function test_an_authenticated_user_can_participate_in_a_forum()
+    public function test_an_authenticated_user_can_add_a_reply_in_a_thread()
     {
         $this->signIn();
 
@@ -34,15 +34,14 @@ class ParticipateInForumTest extends TestCase
     }
 
     /**
-     * test_an_unauthenticated_user_can_participate_in_a_forum
+     * test_an_unauthenticated_user_can_not_add_a_reply_in_a_thread
      *
      * @return void
      */
-    public function test_an_unauthenticated_user_can_participate_in_a_forum()
+    public function test_an_unauthenticated_user_can_not_add_a_reply_in_a_thread()
     {
-        $this->expectException(AuthenticationException::class);
-
-        $this->withoutExceptionHandling()
-            ->post("/threads/slug/1/replies", []);
+        $this->withExceptionHandling()
+            ->post("/threads/slug/1/replies", [])
+            ->assertRedirect(route('login'));
     }
 }
