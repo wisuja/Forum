@@ -24,7 +24,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/threads', [ThreadsController::class, 'index']);
-Route::post('/threads', [ThreadsController::class, 'store']);
 Route::get('/threads/create', [ThreadsController::class, 'create']);
-Route::get('/threads/{thread}', [ThreadsController::class, 'show']);
-Route::post('/threads/{thread}/replies', [RepliesController::class, 'store']);
+Route::get('/threads/{channel}/{thread}', [ThreadsController::class, 'show']);
+Route::post('/threads', [ThreadsController::class, 'store']);
+
+Route::post('/threads/{channel}/{thread}/replies', [RepliesController::class, 'store']);

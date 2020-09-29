@@ -23,7 +23,7 @@ class CreateThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = make(Thread::class);
+        $thread = create(Thread::class);
 
         $this->withoutExceptionHandling()
             ->post('/threads', $thread->toArray());

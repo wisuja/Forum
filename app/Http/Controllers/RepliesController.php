@@ -12,7 +12,7 @@ class RepliesController extends Controller
         $this->middleware('auth')->except(['index', 'show']);
     }
 
-    public function store(Thread $thread)
+    public function store($channelSlug, Thread $thread)
     {
         $thread->addReply([
             'body' => request('body'),
