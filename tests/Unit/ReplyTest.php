@@ -11,6 +11,11 @@ class ReplyTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /**
+     * test_it_has_an_owner
+     *
+     * @return void
+     */
     public function test_it_has_an_owner()
     {
         $reply = Reply::factory()->create();
