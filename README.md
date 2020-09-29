@@ -6,7 +6,7 @@ This is a forum app built using Laravel 8
 - [x] User can view single thread
 - [x] User can create threads
 - [x] User can reply to threads
-- [  ] User can filter threads based on channel
+- [ ] User can filter threads based on channel
 
 _The features will be added along the way_
 
