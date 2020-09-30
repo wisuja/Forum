@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-md-8">
             <div class="card mt-3">
                 <div class="card-header">
@@ -19,33 +19,43 @@
                     {{ $thread->body }}
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row justify-content-center mb-3">
-        <div class="col-md-8">
-            @foreach ($thread->replies as $reply)
+
+            @foreach ($replies as $reply)
                 @include('threads.reply')
             @endforeach
-        </div>
-    </div>
-    @if (auth()->check())
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <form action="{{ $thread->path() }}/replies" method="POST">
+
+            <div class="mt-3">
+                {{ $replies->links() }}
+            </div>
+
+            @if (auth()->check())
+                <form action="{{ $thread->path() }}/replies" method="POST" class="mt-3">
                     @csrf
                     <div class="form-group">
                         <textarea name="body" id="body" class="form-control" rows="5" placeholder="Have something to say?"></textarea>    
                     </div>
                     <button type="submit" class="btn btn-primary">Post</button>
                 </form>
-            </div>
-        </div>
-    @else
-        <div class="row justify-content-center">
-            <div class="col-md-8 text-center">
+            @else
                 <p>You need to <a href="{{ route('login') }}">sign in</a> to participate in the thread.</p>
+            @endif
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mt-3">
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    <p>
+                        The thread was created on {{ $thread->created_at->diffForHumans() }} by
+                        <a href="#">{{ $thread->creator->name }}</a>, and currently have {{ $thread->replies_count }} {{ Str::plural('comment', $thread->replies_count) }}.
+                    </p>
+                </div>
             </div>
         </div>
-    @endif
+    </div>
 </div>
 @endsection
