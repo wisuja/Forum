@@ -6,8 +6,10 @@
         <div class="col-md-8">
             <div class="card mt-3">
                 <div class="card-header">
-                    <a href="#">{{ $thread->creator->name }}</a> posted:
-                    {{ $thread->title }}
+                    <h5>
+                        <a href="{{ route('profile',$thread->creator) }}">{{ $thread->creator->name }}</a> posted:
+                        {{ $thread->title }}
+                    </h5>
                 </div>
 
                 <div class="card-body">
