@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reply extends Model
 {
     use HasFactory;
+    use RecordActivity;
 
     protected $guarded = [];
 
