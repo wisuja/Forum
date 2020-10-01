@@ -6,10 +6,17 @@
         <div class="col-md-8">
             <div class="card mt-3">
                 <div class="card-header">
-                    <h5>
-                        <a href="{{ route('profile',$thread->creator) }}">{{ $thread->creator->name }}</a> posted:
-                        {{ $thread->title }}
-                    </h5>
+                    <div class="level">
+                        <h5 class="flex">
+                            <a href="{{ route('profile',$thread->creator) }}">{{ $thread->creator->name }}</a> posted:
+                            {{ $thread->title }}
+                        </h5>
+                        <form action="{{ $thread->path() }}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="card-body">
