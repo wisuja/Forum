@@ -33,6 +33,7 @@ Route::delete('/threads/{channel}/{thread}', [ThreadsController::class, 'destroy
 Route::post('/threads', [ThreadsController::class, 'store']);
 
 Route::post('/threads/{channel}/{thread}/replies', [RepliesController::class, 'store']);
+Route::patch('/replies/{reply}', [RepliesController::class, 'update']);
 Route::delete('/replies/{reply}', [RepliesController::class, 'destroy']);
 
 Route::post('/replies/{reply}/favorites', [FavoritesController::class, 'store']);
