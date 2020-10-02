@@ -1,4 +1,5 @@
 window._ = require('lodash');
+window.Vue = require('vue');
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -39,3 +40,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+window.events = new Vue();
+
+window.flash = function (message) {
+    window.events.$emit('flash', message);
+}
