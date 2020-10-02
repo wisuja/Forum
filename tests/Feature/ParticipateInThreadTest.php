@@ -61,7 +61,7 @@ class ParticipateInThreadTest extends TestCase
             ->assertSessionHasErrors('body');
     }
 
-    public function test_unauthorized_user_can_not_delete_a_reply()
+    public function test_an_unauthorized_user_can_not_delete_a_reply()
     {
         $reply = create(Reply::class);
 
@@ -74,7 +74,7 @@ class ParticipateInThreadTest extends TestCase
             ->assertStatus(403);
     }
 
-    public function test_authorized_user_can_delete_a_reply()
+    public function test_an_authorized_user_can_delete_a_reply()
     {
         $this->signIn();
         $reply = create(Reply::class, ['user_id' => auth()->id()]);
@@ -85,7 +85,7 @@ class ParticipateInThreadTest extends TestCase
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
     }
 
-    public function test_authorized_user_can_update_a_reply()
+    public function test_an_authorized_user_can_update_a_reply()
     {
         $this->signIn();
         $reply = create(Reply::class, ['user_id' => auth()->id()]);
@@ -99,7 +99,7 @@ class ParticipateInThreadTest extends TestCase
         ]);
     }
 
-    public function test_unauthorized_user_can_not_update_a_reply()
+    public function test_an_unauthorized_user_can_not_update_a_reply()
     {
         $reply = create(Reply::class);
 

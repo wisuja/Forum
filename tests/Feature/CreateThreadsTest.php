@@ -82,7 +82,7 @@ class CreateThreadsTest extends TestCase
             ->assertSessionHasErrors('channel_id');
     }
 
-    public function test_authorized_users_can_delete_a_thread()
+    public function test_an_authorized_users_can_delete_a_thread()
     {
         $this->signIn();
 
@@ -99,7 +99,7 @@ class CreateThreadsTest extends TestCase
         $this->assertEquals(0, Activity::count());
     }
 
-    public function test_unauthorized_users_can_not_delete_threads()
+    public function test_an_unauthorized_users_can_not_delete_threads()
     {
         $thread = create(Thread::class);
 
