@@ -29,11 +29,7 @@
       <div class="card-footer">
         <div class="level">
           <button class="btn btn-warning btn-sm mr-3" @click="editing = true">Edit</button>
-          <form action="/replies/{{ $reply->id }}" method="POST">
-            @csrf
-            @method('delete')
-            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-          </form>
+          <button class="btn btn-danger btn-sm mr-3" @click="destroy">Delete</button>
         </div>
       </div>
     @endcan

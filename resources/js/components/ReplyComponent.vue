@@ -17,6 +17,13 @@ export default {
 
       flash("Reply has been updated.");
     },
+    destroy() {
+      axios.delete("/replies/" + this.attributes.id);
+
+      $(this.$el).fadeOut(300, () => {
+        flash("Reply has been deleted.");
+      });
+    },
   },
 };
 </script>
