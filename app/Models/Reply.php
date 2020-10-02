@@ -21,6 +21,10 @@ class Reply extends Model
         static::addGlobalScope('favoriteCount', function ($builder) {
             $builder->withCount('favorites');
         });
+
+        static::deleting(function ($reply) {
+            $reply->favorites->each->delete();
+        });
     }
 
     public function owner()
