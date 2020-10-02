@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ParticipateInForumTest extends TestCase
+class ParticipateInThreadTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -44,7 +44,7 @@ class ParticipateInForumTest extends TestCase
             ->post("/threads/slug/1/replies", [])
             ->assertRedirect(route('login'));
     }
-    
+
     /**
      * test_a_reply_require_a_body
      *
