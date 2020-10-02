@@ -10,6 +10,9 @@ This is a forum app built using Laravel 8
 - [x] User can view his/her own thread
 - [x] User can filter threads based on popularity
 - [x] User can favorite a reply
+- [x] User can view his/her profile
+- [x] User can view his/her activity feed
+- [x] User can see flash message
 
 _The features will be added along the way_
 
