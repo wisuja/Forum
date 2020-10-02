@@ -14,6 +14,15 @@ class Reply extends Model
 
     protected $with = ['owner', 'favorites'];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('favoriteCount', function ($builder) {
+            $builder->withCount('favorites');
+        });
+    }
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
