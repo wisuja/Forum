@@ -38,6 +38,11 @@ class Reply extends Model
         return $this->morphMany(Favorite::class, 'favorited');
     }
 
+    public function path()
+    {
+        return $this->thread->path() . "#reply_{$this->id}";
+    }
+
     public function favorite()
     {
         $attributes = ['user_id' =>  auth()->id()];
