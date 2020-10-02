@@ -45,8 +45,8 @@ class ThreadsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
+            'title' => 'required|string|max:200',
+            'body' => 'required|string',
             'channel_id' => 'required|exists:channels,id'
         ]);
 
@@ -95,7 +95,25 @@ class ThreadsController extends Controller
      */
     public function update(Request $request, Thread $thread)
     {
-        //
+        // Check if the user can update the thread
+        $this->authorize('update', $thread);
+
+        // The user can only update the title.
+        $request->validate([
+            'title' => ['required', 'string', 'max:200']
+        ]);
+
+        // Update the thread
+        $thread->update([
+            'title' => $request->title,
+        ]);
+
+        if (request()->wantsJson()) {
+            return response()->json([], 200);
+        }
+
+        return redirect($thread->path())
+            ->with('flash', "Your thread has been updated.");
     }
 
     /**
