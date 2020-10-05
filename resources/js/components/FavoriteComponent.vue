@@ -1,7 +1,7 @@
 <template>
   <button type="submit" :class="classes" @click="toggle">
     <i class="fas fa-heart"></i>
-    <span v-text="favoritesCount"></span>
+    <span v-text="count"></span>
   </button>
 </template>
 
