@@ -11,7 +11,7 @@
                             <a href="{{ route('profile',$thread->creator) }}">{{ $thread->creator->name }}</a> posted:
                             {{ $thread->title }}
                         </h5>
-                         @can('update', $thread)
+                        @can('update', $thread)
                             <form action="{{ $thread->path() }}" method="POST">
                                 @method('DELETE')
                                 @csrf
