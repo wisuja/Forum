@@ -12,16 +12,16 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        @foreach ($activities as $date => $activity)
+        @forelse ($activities as $date => $activity)
           <h3 class="page-header">{{ $date }}</h3>
           @foreach ($activity as $record)
             @if (view()->exists("profiles.activities.{$record->type}"))
               @include("profiles.activities.{$record->type}", ['activity' => $record])
             @endif
           @endforeach
-        @endforeach
-
-        {{-- {{ $threads->links() }} --}}
+        @empty
+          <p>There is no activities for this user yet.</p>            
+        @endforelse
       </div>
     </div>
   </div>
