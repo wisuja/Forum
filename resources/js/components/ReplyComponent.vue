@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     update() {
-      axios.patch("/replies/" + this.data.id, {
+      axios.patch("/replies/" + this.id, {
         body: this.body,
       });
 
@@ -70,9 +70,9 @@ export default {
       flash("Reply has been updated.");
     },
     destroy() {
-      axios.delete("/replies/" + this.data.id);
+      axios.delete("/replies/" + this.id);
 
-      this.$emit("deleted", id);
+      this.$emit("deleted", this.id);
     },
   },
 };
