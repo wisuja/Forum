@@ -17,15 +17,6 @@ class Reply extends Model
 
     protected $appends = ['favoritesCount', 'isFavorited'];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::deleting(function ($reply) {
-            $reply->favorites->each->delete();
-        });
-    }
-
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
