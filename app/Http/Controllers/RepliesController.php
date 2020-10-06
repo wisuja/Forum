@@ -13,6 +13,11 @@ class RepliesController extends Controller
         $this->middleware('auth')->except(['index', 'show']);
     }
 
+    public function index($channelId, Thread $thread)
+    {
+        return $thread->replies()->paginate(20);
+    }
+
     public function store($channelSlug, Thread $thread)
     {
         $this->validate(request(), [
