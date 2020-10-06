@@ -3,37 +3,46 @@
     <div v-for="(reply, index) in items" v-bind:key="reply.id">
       <reply :data="reply" @deleted="remove(index)"></reply>
     </div>
-    <reply-form class="mt-3" :endpoint="endpoint" @created="add"></reply-form>
+
+    <paginator :dataSet="dataSet" @changed="fetch"></paginator>
+    <reply-form class="mt-3" @created="add"></reply-form>
   </div>
 </template>
   
 <script>
 import Reply from "./ReplyComponent.vue";
 import ReplyForm from "./ReplyFormComponent.vue";
+import Collection from "../mixins/Collection";
 
 export default {
   components: { Reply, ReplyForm },
-  props: ["data"],
-
+  mixins: [Collection],
   data() {
     return {
-      items: this.data,
-      endpoint: location.pathname + "/replies",
+      dataSet: false,
     };
   },
 
+  created() {
+    this.fetch();
+  },
+
   methods: {
-    add(reply) {
-      this.items.push(reply);
-
-      this.$emit("created");
+    fetch(page) {
+      axios.get(this.url(page)).then(this.refresh);
     },
-    remove(index) {
-      this.items.splice(index, 1);
+    refresh({ data }) {
+      this.dataSet = data;
+      this.items = data.data;
+    },
+    url(page) {
+      if (!page) {
+        let query = location.search.match(/page=(\d+)/);
 
-      this.$emit("removed");
+        page = query ? query[1] : 1;
+      }
 
-      flash("Reply has been deleted.");
+      return `${location.pathname}/replies?page=${page}`;
     },
   },
 };
