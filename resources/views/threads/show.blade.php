@@ -47,6 +47,10 @@
                             The thread was created on {{ $thread->created_at->diffForHumans() }} by
                             <a href="#">{{ $thread->creator->name }}</a>, and currently have <span v-text="repliesCount"></span> {{ Str::plural('comment', $thread->replies_count) }}.
                         </p>
+
+                        <p>
+                            <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
+                        </p>
                     </div>
                 </div>
             </div>
