@@ -13,6 +13,8 @@ This is a forum app built using Laravel 8
 - [x] User can view his/her profile
 - [x] User can view his/her activity feed
 - [x] User can see flash message
+- [x] User can filter threads by unanswered
+- [x] User can use pagination in replies
 
 _The features will be added along the way_
 
