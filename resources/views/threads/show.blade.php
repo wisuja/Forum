@@ -32,27 +32,7 @@
                     </div>
                 </div>
     
-                <replies :data="{{ $thread->replies }}" @created="repliesCount++" @removed="repliesCount--"></replies>
-    
-                {{-- @foreach ($replies as $reply)
-                    @include('threads.reply')
-                @endforeach
-    
-                <div class="mt-3">
-                    {{ $replies->links() }}
-                </div> --}}
-    
-                {{-- @if (auth()->check())
-                    <form action="{{ $thread->path() }}/replies" method="POST" class="mt-3">
-                        @csrf
-                        <div class="form-group">
-                            <textarea name="body" id="body" class="form-control" rows="5" placeholder="Have something to say?"></textarea>    
-                        </div>
-                        <button type="submit" class="btn btn-primary">Post</button>
-                    </form>
-                @else
-                    <p>You need to <a href="{{ route('login') }}">sign in</a> to participate in the thread.</p>
-                @endif --}}
+                <replies @created="repliesCount++" @removed="repliesCount--"></replies>
             </div>
     
             <div class="col-md-4">
