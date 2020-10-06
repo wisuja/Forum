@@ -94,6 +94,17 @@ class ReadThreadsTest extends TestCase
             ->assertSeeInOrder([$threadWithThreeReplies->title, $threadWithTwoReplies->title, $threadWithNoReplies->title]);
     }
 
+    public function test_a_user_can_filter_threads_by_those_are_unanswered()
+    {
+        $threadWithNoReplies = $this->thread;
+
+        $threadWithReplies = create(Thread::class);
+        create(Reply::class, ['thread_id' => $threadWithReplies->id]);
+
+        $this->get('/threads?unanswered=1')
+            ->assertSee($threadWithNoReplies->title);
+    }
+
     public function test_a_user_can_request_all_replies_for_a_given_thread()
     {
         $thread = create(Thread::class);
