@@ -13,13 +13,11 @@ class Thread extends Model
 
     protected $guarded = [];
 
+    protected $withCount = ['replies'];
+
     protected static function boot()
     {
         parent::boot();
-
-        static::addGlobalScope('replyCount', function ($builder) {
-            $builder->withCount('replies');
-        });
 
         static::deleting(function ($thread) {
             $thread->replies->each->delete();
