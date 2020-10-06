@@ -21,13 +21,7 @@ class SubscribeToThreadTest extends TestCase
         $this->withoutExceptionHandling()
             ->post($thread->path() . '/subscriptions');
 
-        //TODO: Add notification whenever there is a new reply
-        // $thread->addReply([
-        //     'user_id' => auth()->id(),
-        //     'body' => 'reply'
-        // ]);
-
-        $this->assertCount(1, $thread->subscriptions);
+        $this->assertCount(1, $thread->fresh()->subscriptions);
     }
 
     public function test_a_user_can_unsubscribe_to_a_thread()
