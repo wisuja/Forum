@@ -15,6 +15,8 @@ This is a forum app built using Laravel 8
 - [x] User can see flash message
 - [x] User can filter threads by unanswered
 - [x] User can use pagination in replies
+- [x] User can subscribe to a thread
+- [x] User can received notifications about subscribed thread
 
 _The features will be added along the way_
 
