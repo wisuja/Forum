@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\User;
+use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -109,5 +110,18 @@ class ParticipateInThreadTest extends TestCase
         $this->signIn()
             ->patch("/replies/{$reply->id}", ['body' => $updatedReply])
             ->assertStatus(403);
+    }
+
+    public function test_replies_that_contains_spam_may_not_be_created()
+    {
+        $this->expectException(Exception::class);
+
+        $this->signIn();
+
+        $thread = create(Thread::class);
+        $reply = make(Reply::class, ['body' => 'Yahoo Customer Support']);
+
+        $this->withoutExceptionHandling()
+            ->post("{$thread->path()}/replies", $reply->toArray());
     }
 }
