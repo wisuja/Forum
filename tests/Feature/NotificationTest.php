@@ -13,10 +13,15 @@ class NotificationTest extends TestCase
 {
     use DatabaseMigrations;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->signIn();
+    }
+
     public function test_a_notification_is_prepared_when_a_subscribed_thread_receives_a_new_reply_that_is_not_by_the_current_user()
     {
-        $this->signIn();
-
         $thread = create(Thread::class)->subscribe();
 
         $this->assertCount(0, auth()->user()->notifications);
@@ -38,8 +43,6 @@ class NotificationTest extends TestCase
 
     public function test_a_user_can_fetch_all_unread_notifications()
     {
-        $this->signIn();
-
         $thread = create(Thread::class)->subscribe();
 
         $thread->addReply([
@@ -56,8 +59,6 @@ class NotificationTest extends TestCase
 
     public function test_a_user_can_mark_a_notification_as_read()
     {
-        $this->signIn();
-
         $thread = create(Thread::class)->subscribe();
 
         $thread->addReply([
