@@ -24,21 +24,23 @@ class NotificationTest extends TestCase
     {
         $thread = create(Thread::class)->subscribe();
 
-        $this->assertCount(0, auth()->user()->notifications);
+        tap(auth()->user(), function ($user) use ($thread) {
+            $this->assertCount(0, $user->notifications);
 
-        $thread->addReply([
-            'user_id' => auth()->id(),
-            'body' => 'reply'
-        ]);
+            $thread->addReply([
+                'user_id' => auth()->id(),
+                'body' => 'reply'
+            ]);
 
-        $this->assertCount(0, auth()->user()->fresh()->notifications);
+            $this->assertCount(0, $user->fresh()->notifications);
 
-        $thread->addReply([
-            'user_id' => create(User::class)->id,
-            'body' => 'reply'
-        ]);
+            $thread->addReply([
+                'user_id' => create(User::class)->id,
+                'body' => 'reply'
+            ]);
 
-        $this->assertCount(1, auth()->user()->fresh()->notifications);
+            $this->assertCount(1, $user->fresh()->notifications);
+        });
     }
 
     public function test_a_user_can_fetch_all_unread_notifications()
@@ -50,9 +52,7 @@ class NotificationTest extends TestCase
             'body' => 'reply'
         ]);
 
-        $user = auth()->user();
-
-        $response = $this->getJson("/profiles/{$user->name}/notifications")->json();
+        $response = $this->getJson("/profiles/" . auth()->user()->name . "/notifications")->json();
 
         $this->assertCount(1, $response);
     }
@@ -66,15 +66,15 @@ class NotificationTest extends TestCase
             'body' => 'reply'
         ]);
 
-        $user = auth()->user();
+        tap(auth()->user(), function ($user) {
+            $this->assertCount(1, $user->unreadNotifications);
 
-        $this->assertCount(1, $user->unreadNotifications);
+            $notificationId = $user->unreadNotifications->first()->id;
 
-        $notificationId = $user->unreadNotifications->first()->id;
+            $this->withoutExceptionHandling()
+                ->delete("/profiles/{$user->name}/notifications/{$notificationId}");
 
-        $this->withoutExceptionHandling()
-            ->delete("/profiles/{$user->name}/notifications/{$notificationId}");
-
-        $this->assertCount(0, $user->fresh()->unreadNotifications);
+            $this->assertCount(0, $user->fresh()->unreadNotifications);
+        });
     }
 }
