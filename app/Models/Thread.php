@@ -52,6 +52,8 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
+        $this->touch();
+
         $this->notifySubscribers($reply);
 
         return $reply;
@@ -97,5 +99,13 @@ class Thread extends Model
             ->where('user_id', '!=', $reply->user_id)
             ->each
             ->notify($reply);
+    }
+
+    public function hasUpdatesFor($user = null)
+    {
+        $user = $user ?: auth()->user();
+
+        $key = $user->visitedThreadsCacheKey($this);
+        return $this->updated_at > cache($key);
     }
 }
