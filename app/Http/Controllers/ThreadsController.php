@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Filters\ThreadFilters;
 use App\Models\Channel;
 use App\Models\Thread;
-use App\Rules\SpamFree;
 use Illuminate\Http\Request;
 
 class ThreadsController extends Controller
