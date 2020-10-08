@@ -65,13 +65,18 @@ export default {
   },
   methods: {
     update() {
-      axios.patch("/replies/" + this.id, {
-        body: this.body,
-      });
+      axios
+        .patch("/replies/" + this.id, {
+          body: this.body,
+        })
+        .then(() => {
+          this.editing = false;
 
-      this.editing = false;
-
-      flash("Reply has been updated.");
+          flash("Reply has been updated.");
+        })
+        .catch(({ response: { data } }) => {
+          flash(data, "danger");
+        });
     },
     destroy() {
       axios.delete("/replies/" + this.id);
