@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Reply;
 use App\Models\Thread;
-use App\Rules\SpamFree;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -24,7 +23,7 @@ class RepliesController extends Controller
     {
         try {
             $this->validate(request(), [
-                'body' => ['required', new SpamFree]
+                'body' => ['required', 'spamfree']
             ]);
 
             $reply = $thread->addReply([
@@ -32,7 +31,6 @@ class RepliesController extends Controller
                 'user_id' => auth()->id()
             ]);
         } catch (Exception $ex) {
-            // throw $ex;
             return response('Sorry, your reply could not be saved at this moment.', 422);
         }
 
@@ -45,7 +43,7 @@ class RepliesController extends Controller
 
         try {
             $this->validate(request(), [
-                'body' => ['required', new SpamFree]
+                'body' => ['required', 'spamfree']
             ]);
 
             $reply->update(['body' => request('body')]);
