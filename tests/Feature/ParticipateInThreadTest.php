@@ -108,15 +108,14 @@ class ParticipateInThreadTest extends TestCase
             ->assertStatus(403);
     }
 
-    public function test_replies_that_contains_spam_may_not_be_created()
+    public function test_replies_that_contains_invalid_keywords_may_not_be_created()
     {
         $this->signIn();
 
         $thread = create(Thread::class);
         $reply = make(Reply::class, ['body' => 'Yahoo Customer Support']);
 
-        $this->withoutExceptionHandling()
-            ->post("{$thread->path()}/replies", $reply->toArray())
+        $this->post("{$thread->path()}/replies", $reply->toArray())
             ->assertStatus(422);
     }
 
@@ -131,6 +130,6 @@ class ParticipateInThreadTest extends TestCase
             ->assertStatus(201);
 
         $this->post("{$thread->path()}/replies", $reply->toArray())
-            ->assertStatus(422);
+            ->assertStatus(429);
     }
 }
