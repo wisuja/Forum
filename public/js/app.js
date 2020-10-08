@@ -1965,12 +1965,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["message"],
   data: function data() {
     return {
       body: "",
-      show: false
+      show: false,
+      level: "success"
     };
   },
   created: function created() {
@@ -1980,13 +1985,16 @@ __webpack_require__.r(__webpack_exports__);
       this.flash(this.message);
     }
 
-    window.events.$on("flash", function (message) {
-      return _this.flash(message);
+    window.events.$on("flash", function (data) {
+      return _this.flash(data);
     });
   },
   methods: {
-    flash: function flash(message) {
+    flash: function flash(_ref) {
+      var message = _ref.message,
+          level = _ref.level;
       this.body = message;
+      this.level = level;
       this.show = true;
       this.hide();
     },
@@ -2208,11 +2216,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     update: function update() {
+      var _this2 = this;
+
       axios.patch("/replies/" + this.id, {
         body: this.body
+      }).then(function () {
+        _this2.editing = false;
+        flash("Reply has been updated.");
+      })["catch"](function (_ref) {
+        var data = _ref.response.data;
+        flash(data, "danger");
       });
-      this.editing = false;
-      flash("Reply has been updated.");
     },
     destroy: function destroy() {
       axios["delete"]("/replies/" + this.id);
@@ -2281,6 +2295,9 @@ __webpack_require__.r(__webpack_exports__);
         flash("Your reply has been posted.");
 
         _this.$emit("created", data);
+      })["catch"](function (_ref2) {
+        var data = _ref2.response.data;
+        flash(data, "danger");
       });
     }
   }
@@ -6843,7 +6860,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.alert-flash {\n  position: fixed;\n  bottom: 25px;\n  right: 25px;\n}\n", ""]);
+exports.push([module.i, "\n.alert-flash {\r\n  position: fixed;\r\n  bottom: 25px;\r\n  right: 25px;\n}\r\n", ""]);
 
 // exports
 
@@ -60201,17 +60218,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      directives: [
-        { name: "show", rawName: "v-show", value: _vm.show, expression: "show" }
-      ],
-      staticClass: "alert alert-flash alert-success",
-      attrs: { role: "alert" }
-    },
-    [_c("strong", [_vm._v("Success")]), _vm._v(" " + _vm._s(_vm.body) + "\n")]
-  )
+  return _c("div", {
+    directives: [
+      { name: "show", rawName: "v-show", value: _vm.show, expression: "show" }
+    ],
+    staticClass: "alert alert-flash",
+    class: "alert-" + _vm.level,
+    attrs: { role: "alert" },
+    domProps: { textContent: _vm._s(_vm.body) }
+  })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -72909,7 +72924,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.events = new Vue();
 
 window.flash = function (message) {
-  window.events.$emit('flash', message);
+  var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
+  window.events.$emit('flash', {
+    message: message,
+    level: level
+  });
 };
 
 Vue.prototype.authorize = function (handler) {
