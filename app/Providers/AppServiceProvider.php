@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Models\Channel;
-use App\Rules\SpamFree;
 use Barryvdh\Debugbar\ServiceProvider as DebugbarServiceProvider;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
@@ -38,6 +37,6 @@ class AppServiceProvider extends ServiceProvider
             $view->with('channels', $channels);
         });
 
-        Validator::extend('spamfree', [SpamFree::class, 'passes']);
+        Validator::extend('spamfree', '\App\Rules\SpamFree@passes');
     }
 }
