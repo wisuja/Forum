@@ -90,7 +90,7 @@ class ParticipateInThreadTest extends TestCase
         $this->patch("/replies/{$reply->id}", ['body' => $updatedReply]);
 
         $this->assertDatabaseHas('replies', [
-            'user_id' => auth()->id(),
+            'id' => $reply->id,
             'body' => $updatedReply
         ]);
     }
