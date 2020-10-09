@@ -35,7 +35,6 @@ class RepliesController extends Controller
         try {
             $reply->update(['body' => request('body')]);
         } catch (Exception $ex) {
-            // throw $ex;
             return response('Sorry, your reply could not be saved at this moment.', 422);
         }
     }
