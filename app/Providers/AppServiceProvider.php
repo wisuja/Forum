@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Channel;
 use Barryvdh\Debugbar\ServiceProvider as DebugbarServiceProvider;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
@@ -30,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Paginator::useBootstrap();
+        
         View::composer('*', function ($view) {
             $channels = Cache::rememberForever('channels', function () {
                 return Channel::all();
