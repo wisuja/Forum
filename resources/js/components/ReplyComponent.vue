@@ -15,7 +15,7 @@
     </div>
     <div class="card-body">
       <div v-if="editing">
-        <form @submit="update">
+        <form @submit.prevent="update">
           <div class="form-group">
             <textarea class="form-control" rows="5" v-model="body" required></textarea>
           </div>
@@ -26,7 +26,7 @@
           </button>
         </form>
       </div>
-      <div v-else v-text="body"></div>
+      <div v-else v-html="body"></div>
     </div>
     <div class="card-footer" v-if="canUpdate">
       <div class="level">
