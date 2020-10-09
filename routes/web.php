@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\RepliesController;
@@ -48,3 +49,5 @@ Route::delete('/replies/{reply}/favorites', [FavoritesController::class, 'destro
 Route::get('/profiles/{user}', [ProfilesController::class, 'show'])->name('profile');
 Route::get('/profiles/{user}/notifications', [UserNotificationsController::class, 'index']);
 Route::delete('/profiles/{user}/notifications/{notification}', [UserNotificationsController::class, 'destroy']);
+
+Route::get('/api/users', [UsersController::class, 'index']);
