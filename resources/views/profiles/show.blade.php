@@ -5,20 +5,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="page-header">
-          <h1>{{ $profileUser->name }}</h1>
-          <small>Joined since {{ $profileUser->created_at->diffForHumans() }}</small>
-
-          @can('update', $profileUser)
-            <form method="POST" action="{{ route('avatar', $profileUser) }}" enctype="multipart/form-data">
-              @csrf
-              <input type="file" name="avatar">
-              <div class="form-group">
-              <button type="submit" class="btn btn-primary mt-3">Add Avatar</button>
-              </div>
-            </form>
-          @endcan
-
-          <img src="{{ $profileUser->avatar() }}" width="50" height="50">
+          <avatar-form :user="{{ $profileUser }}"></avatar-form>
         </div>
       </div>
     </div>
