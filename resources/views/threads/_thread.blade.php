@@ -28,4 +28,7 @@
     @endif
     {{ $thread->body }}
   </div>
+  <div class="card-footer">
+    {{ $thread->visits() }} visits.
+  </div>
 </div>
