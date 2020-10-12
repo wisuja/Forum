@@ -10,7 +10,6 @@ class Thread extends Model
 {
     use HasFactory;
     use RecordActivity;
-    use RecordVisit;
 
     protected $guarded = [];
 
