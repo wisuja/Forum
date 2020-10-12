@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Redis;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
@@ -144,5 +145,17 @@ class ThreadTest extends TestCase
 
             $this->assertFalse($thread->hasUpdatesFor($user));
         });
+    }
+
+    public function test_a_thread_records_each_visit(){
+        $thread = make(Thread::class, ['id' => 1]);
+        $thread->resetVisits();
+        $this->assertEquals(0, $thread->visits());
+
+        $thread->recordVisit();
+        $this->assertEquals(1, $thread->visits());
+
+        $thread->recordVisit();
+        $this->assertEquals(2, $thread->visits());
     }
 }
