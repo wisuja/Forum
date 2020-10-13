@@ -34,7 +34,7 @@ Route::get('/threads/create', [ThreadsController::class, 'create']);
 Route::get('/threads/{channel}', [ThreadsController::class, 'index']);
 Route::get('/threads/{channel}/{thread}', [ThreadsController::class, 'show']);
 Route::delete('/threads/{channel}/{thread}', [ThreadsController::class, 'destroy']);
-Route::post('/threads', [ThreadsController::class, 'store']);
+Route::post('/threads', [ThreadsController::class, 'store'])->middleware('must-be-confirmed');
 
 Route::get('/threads/{channel}/{thread}/replies', [RepliesController::class, 'index']);
 Route::post('/threads/{channel}/{thread}/replies', [RepliesController::class, 'store']);
