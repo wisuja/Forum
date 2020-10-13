@@ -17,6 +17,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+            'App\Listeners\SendEmailConfirmationRequest'
         ],
         'App\Events\ThreadReceivedNewReply' => [
             'App\Listeners\NotifyMentionedUsers',
