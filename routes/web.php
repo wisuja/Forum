@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\RegisterConfirmationsController;
 use App\Http\Controllers\Api\UserAvatarsController;
 use App\Http\Controllers\Api\UsersController;
+use App\Http\Controllers\Auth\RegisterConfirmationsController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\RepliesController;
