@@ -13,7 +13,7 @@ export default {
   props: ["message"],
   data() {
     return {
-      body: "",
+      body: this.message,
       show: false,
       level: "success",
     };
@@ -21,16 +21,18 @@ export default {
 
   created() {
     if (this.message) {
-      this.flash(this.message);
+      this.flash();
     }
 
     window.events.$on("flash", (data) => this.flash(data));
   },
 
   methods: {
-    flash({ message, level }) {
-      this.body = message;
-      this.level = level;
+    flash(data) {
+      if(data) {
+        this.body = message;
+        this.level = level;
+      }
       this.show = true;
 
       this.hide();
