@@ -17,6 +17,12 @@ class CreateThreadsTest extends TestCase
 {
     use DatabaseMigrations;
 
+    public function test_an_authenticated_user_must_first_confirm_their_email_address_before_creating_threads() 
+    {
+        $this->publishThread()
+            ->assertSessionHas('flash');
+    }
+
     /**
      * test_an_authenticated_user_can_create_new_forum_threads
      *
@@ -114,7 +120,7 @@ class CreateThreadsTest extends TestCase
             ->assertStatus(403);
     }
 
-    function publishThread($override)
+    function publishThread($override = null)
     {
         $this->signIn();
 
