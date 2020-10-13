@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\RegisterConfirmationsController;
 use App\Http\Controllers\Api\UserAvatarsController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\FavoritesController;
@@ -53,3 +54,5 @@ Route::delete('/profiles/{user}/notifications/{notification}', [UserNotification
 
 Route::get('/api/users', [UsersController::class, 'index']);
 Route::post('/api/users/{user}/avatar', [UserAvatarsController::class, 'store'])->name('avatar');
+
+Route::get('/register/confirm', [RegisterConfirmationsController::class, 'index']);
