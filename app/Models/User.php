@@ -21,7 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'avatar_path'
+        'avatar_path',
+        'confirmed',
+        'confirmation_token'
     ];
 
     /**
@@ -42,6 +44,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'confirmed' => 'boolean'
     ];
 
     public function getRouteKeyName()
@@ -78,5 +81,10 @@ class User extends Authenticatable
     {
         $avatar = $avatar ?: 'avatars/default.jpg';
         return asset('/storage/' .  $avatar);
+    }
+
+    public function confirm() {
+        $this->confirmed = true;
+        $this->save();
     }
 }
