@@ -17,9 +17,14 @@ class CreateThreadsTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function test_an_authenticated_user_must_first_confirm_their_email_address_before_creating_threads() 
+    public function test_a_new_user_must_first_confirm_their_email_address_before_creating_threads() 
     {
-        $this->publishThread()
+        $user = User::factory()->unconfirmed()->create();
+        $this->signIn($user);
+
+        $thread = make(Thread::class);
+
+        $this->post(route('threads'), $thread->toArray())
             ->assertSessionHas('flash');
     }
 
@@ -35,7 +40,7 @@ class CreateThreadsTest extends TestCase
         $thread = make(Thread::class);
 
         $response = $this->withoutExceptionHandling()
-            ->post('/threads', $thread->toArray());
+            ->post(route('threads'), $thread->toArray());
 
         $this->get($response->headers->get('Location'))
             ->assertSee($thread->title);
@@ -51,7 +56,7 @@ class CreateThreadsTest extends TestCase
         $this->get('/threads/create')
             ->assertRedirect(route('login'));
 
-        $this->post('/threads')
+        $this->post(route('threads'))
             ->assertRedirect(route('login'));
     }
 
@@ -126,6 +131,6 @@ class CreateThreadsTest extends TestCase
 
         $thread = make(Thread::class, $override);
 
-        return $this->post('/threads', $thread->toArray());
+        return $this->post(route('threads'), $thread->toArray());
     }
 }
