@@ -4,17 +4,23 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class RegisterConfirmationsController extends Controller
 {
     public function index() 
     {
-        User::where('confirmation_token', request('token'))
+        try {
+            User::where('confirmation_token', request('token'))
             ->firstOrFail()
             ->confirm();
+        }catch (Exception $e) {
+            return redirect(route('threads'))
+                ->with('flash', 'Sorry, unknown token');
+        }
 
-        return redirect('/threads')
+        return redirect(route('threads'))
             ->with('flash', 'Your account is now confirmed!');
     }
 }
