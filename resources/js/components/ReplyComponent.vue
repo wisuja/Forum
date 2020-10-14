@@ -78,12 +78,17 @@ export default {
             return moment(this.data.created_at).fromNow();
         }
     },
+    created() {
+        window.events.$on("best-reply-selected", id => {
+            this.isBest = id == this.id;
+        });
+    },
     data() {
         return {
             editing: false,
             body: this.data.body,
             id: this.data.id,
-            isBest: false,
+            isBest: this.data.isBest,
             reply: this.data
         };
     },
@@ -108,7 +113,18 @@ export default {
             this.$emit("deleted", this.id);
         },
         markBestReply() {
-            this.isBest = true;
+            axios
+                .post(`/replies/${this.id}/best`)
+                .then(() => {
+                    window.events.$emit("best-reply-selected", this.id);
+
+                    flash("You marked this reply as the best reply");
+                })
+                .catch(error => {
+                    if (error) {
+                        flash("You cannot do this action", "danger");
+                    }
+                });
         }
     }
 };
