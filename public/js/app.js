@@ -3549,23 +3549,30 @@ __webpack_require__.r(__webpack_exports__);
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(this.data.created_at).fromNow();
     }
   },
+  created: function created() {
+    var _this = this;
+
+    window.events.$on("best-reply-selected", function (id) {
+      _this.isBest = id == _this.id;
+    });
+  },
   data: function data() {
     return {
       editing: false,
       body: this.data.body,
       id: this.data.id,
-      isBest: false,
+      isBest: this.data.isBest,
       reply: this.data
     };
   },
   methods: {
     update: function update() {
-      var _this = this;
+      var _this2 = this;
 
       axios.patch("/replies/" + this.id, {
         body: this.body
       }).then(function () {
-        _this.editing = false;
+        _this2.editing = false;
         flash("Reply has been updated.");
       })["catch"](function (_ref) {
         var data = _ref.response.data;
@@ -3577,7 +3584,16 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit("deleted", this.id);
     },
     markBestReply: function markBestReply() {
-      this.isBest = true;
+      var _this3 = this;
+
+      axios.post("/replies/".concat(this.id, "/best")).then(function () {
+        window.events.$emit("best-reply-selected", _this3.id);
+        flash("You marked this reply as the best reply");
+      })["catch"](function (error) {
+        if (error) {
+          flash("You cannot do this action", "danger");
+        }
+      });
     }
   }
 });
