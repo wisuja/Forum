@@ -77,6 +77,10 @@ class User extends Authenticatable
         return $this->hasOne(Reply::class)->latest();
     }
 
+    public function setNameAttribute($name) {
+        $this->attributes['name'] = preg_replace('/\s/','', $name);
+    }
+
     public function getAvatarPathAttribute($avatar)
     {
         $avatar = $avatar ?: 'avatars/default.jpg';
