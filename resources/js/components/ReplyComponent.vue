@@ -4,7 +4,7 @@
             <div class="level">
                 <h5 class="flex">
                     <a
-                        :href="'/profile/' + data.owner.name"
+                        :href="'/profiles/' + data.owner.name"
                         v-text="data.owner.name"
                     ></a>
                     said
@@ -33,7 +33,10 @@
                     </button>
                     <button
                         class="btn btn-sm btn-link"
-                        @click="editing = false"
+                        @click="
+                            editing = false;
+                            body = data.body;
+                        "
                         type="button"
                     >
                         Cancel
@@ -86,10 +89,10 @@ export default {
     data() {
         return {
             editing: false,
-            body: this.data.body,
+            reply: this.data,
             id: this.data.id,
-            isBest: this.data.isBest,
-            reply: this.data
+            body: this.data.body,
+            isBest: this.data.isBest
         };
     },
     methods: {
@@ -125,6 +128,13 @@ export default {
                         flash("You cannot do this action", "danger");
                     }
                 });
+        }
+    },
+    watch: {
+        editing() {
+            if (this.editing) {
+                this.body = this.body.replace(/<a[^>]*>|<[^>]*>/gi, "");
+            }
         }
     }
 };
