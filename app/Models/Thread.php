@@ -118,4 +118,9 @@ class Thread extends Model
         $key = $user->visitedThreadsCacheKey($this);
         return $this->updated_at > cache($key);
     }
+
+    public function setBestReply($reply) 
+    {
+        $this->update(['best_reply_id' => $reply->id]);
+    }
 }
