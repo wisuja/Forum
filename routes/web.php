@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\UserAvatarsController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Auth\RegisterConfirmationsController;
+use App\Http\Controllers\BestRepliesController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\RepliesController;
@@ -56,3 +57,5 @@ Route::get('/api/users', [UsersController::class, 'index']);
 Route::post('/api/users/{user}/avatar', [UserAvatarsController::class, 'store'])->name('avatar');
 
 Route::get('/register/confirm', [RegisterConfirmationsController::class, 'index'])->name('register.confirm');
+
+Route::post('/replies/{reply}/best', [BestRepliesController::class, 'store'])->name('best-replies.store');
