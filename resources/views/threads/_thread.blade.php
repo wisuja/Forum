@@ -21,12 +21,12 @@
     </div>
   </div>
   <div class="card-body">
-    @if (session('status'))
-      <div class="alert alert-success" role="alert">
-        {{ session('status') }}
-      </div>
+    @if (Str::length($thread->body) < 200)
+      {{ $thread->body }}
+    @else
+      {{ Str::limit($thread->body, 200, '') }}
+      <a href="{{ $thread->path() }}">Read more...</a>
     @endif
-    {{ $thread->body }}
   </div>
   <div class="card-footer">
     {{ $thread->visits }} visits.
