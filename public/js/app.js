@@ -3537,6 +3537,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3559,10 +3562,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       editing: false,
-      body: this.data.body,
+      reply: this.data,
       id: this.data.id,
-      isBest: this.data.isBest,
-      reply: this.data
+      body: this.data.body,
+      isBest: this.data.isBest
     };
   },
   methods: {
@@ -3594,6 +3597,13 @@ __webpack_require__.r(__webpack_exports__);
           flash("You cannot do this action", "danger");
         }
       });
+    }
+  },
+  watch: {
+    editing: function editing() {
+      if (this.editing) {
+        this.body = this.body.replace(/<a[^>]*>|<[^>]*>/gi, "");
+      }
     }
   }
 });
@@ -62311,7 +62321,7 @@ var render = function() {
           _c("div", { staticClass: "level" }, [
             _c("h5", { staticClass: "flex" }, [
               _c("a", {
-                attrs: { href: "/profile/" + _vm.data.owner.name },
+                attrs: { href: "/profiles/" + _vm.data.owner.name },
                 domProps: { textContent: _vm._s(_vm.data.owner.name) }
               }),
               _vm._v("\n                said\n                "),
@@ -62380,6 +62390,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           _vm.editing = false
+                          _vm.body = _vm.data.body
                         }
                       }
                     },
