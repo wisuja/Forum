@@ -5,7 +5,11 @@
         </div>
 
         <paginator :dataSet="dataSet" @changed="fetch"></paginator>
-        <reply-form class="mt-3" @created="add"></reply-form>
+
+        <p v-if="$parent.locked" class="lead text-center text-secondary mt-3">
+            This thread is locked. You may not add replies to this thread.
+        </p>
+        <reply-form class="mt-3" @created="add" v-else></reply-form>
     </div>
 </template>
 
