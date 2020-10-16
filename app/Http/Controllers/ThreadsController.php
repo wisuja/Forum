@@ -118,12 +118,14 @@ class ThreadsController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy($channelSlug, Thread $thread)
+    public function destroy($channelSlug, Thread $thread, Trending $trending)
     {
         $this->authorize('update', $thread);
 
         $thread->delete();
 
+        $trending->delete($thread);
+        
         if (request()->wantsJson()) {
             return response([], 204);
         }
