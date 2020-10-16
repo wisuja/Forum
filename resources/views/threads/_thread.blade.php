@@ -6,10 +6,10 @@
           <a href="{{ $thread->path() }}">
             @if (auth()->check() && $thread->hasUpdatesFor(auth()->user()))
               <strong>
-                {{ $thread->title }}
+                {{ Str::limit($thread->title, 35, '...')  }}
               </strong>
             @else
-              {{ $thread->title }}
+              {{ Str::limit($thread->title, 35, '...')  }}
             @endif
           </a>
         </h5>
