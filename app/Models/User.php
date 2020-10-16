@@ -93,4 +93,9 @@ class User extends Authenticatable
         $this->confirmation_token = null;
         $this->save();
     }
+
+    public function isAdmin()
+    {
+        return in_array($this->email, ['admin@gmail.com']);
+    }
 }
