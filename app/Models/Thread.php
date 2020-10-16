@@ -18,6 +18,10 @@ class Thread extends Model
 
     protected $appends = ['isSubscribedTo'];
 
+    protected $casts = [
+        'locked' => 'boolean'
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -122,5 +126,10 @@ class Thread extends Model
     public function setBestReply($reply) 
     {
         $this->update(['best_reply_id' => $reply->id]);
+    }
+
+    public function lock() 
+    {
+        $this->update(['locked' => true]);
     }
 }
