@@ -38,6 +38,7 @@ Route::delete('/threads/{channel}/{thread}', [ThreadsController::class, 'destroy
 Route::post('/threads', [ThreadsController::class, 'store'])->middleware('must-be-confirmed');
 
 Route::post('/locked-threads/{thread}', [LockedThreadsController::class, 'store'])->middleware('admin')->name('locked-threads.store');
+Route::delete('/locked-threads/{thread}', [LockedThreadsController::class, 'destroy'])->middleware('admin')->name('locked-threads.destroy');
 
 Route::get('/threads/{channel}/{thread}/replies', [RepliesController::class, 'index']);
 Route::post('/threads/{channel}/{thread}/replies', [RepliesController::class, 'store']);
