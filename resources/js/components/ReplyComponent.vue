@@ -4,15 +4,15 @@
             <div class="level">
                 <h5 class="flex">
                     <a
-                        :href="'/profiles/' + data.owner.name"
-                        v-text="data.owner.name"
+                        :href="'/profiles/' + reply.owner.name"
+                        v-text="reply.owner.name"
                     ></a>
                     said
                     <span v-text="ago"></span>
                 </h5>
 
                 <div v-if="signedIn">
-                    <favorite :reply="data"></favorite>
+                    <favorite :reply="reply"></favorite>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
                         class="btn btn-sm btn-link"
                         @click="
                             editing = false;
-                            body = data.body;
+                            body = reply.body;
                         "
                         type="button"
                     >
@@ -45,9 +45,12 @@
             </div>
             <div v-else v-html="body"></div>
         </div>
-        <div class="card-footer">
+        <div
+            class="card-footer"
+            v-if="authorize('owns', reply) || authorize('owns', reply.thread)"
+        >
             <div class="level">
-                <div v-if="authorize('updateReply', reply)">
+                <div>
                     <button
                         class="btn btn-warning btn-sm mr-3"
                         @click="editing = true"
@@ -61,7 +64,7 @@
                 <button
                     class="btn btn-primary btn-sm ml-auto"
                     @click="markBestReply"
-                    v-show="!isBest"
+                    v-if="authorize('owns', reply.thread)"
                 >
                     Best Reply
                 </button>
@@ -74,11 +77,11 @@ import Favorite from "./FavoriteComponent.vue";
 import moment from "moment";
 
 export default {
-    props: ["data"],
+    props: ["reply"],
     components: { Favorite },
     computed: {
         ago() {
-            return moment(this.data.created_at).fromNow();
+            return moment(this.reply.created_at).fromNow();
         }
     },
     created() {
@@ -89,10 +92,9 @@ export default {
     data() {
         return {
             editing: false,
-            reply: this.data,
-            id: this.data.id,
-            body: this.data.body,
-            isBest: this.data.isBest
+            id: this.reply.id,
+            body: this.reply.body,
+            isBest: this.reply.isBest
         };
     },
     methods: {
