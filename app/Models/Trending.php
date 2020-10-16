@@ -15,9 +15,17 @@ class Trending {
 
   public function push($thread) 
   {
-      Redis::zincrby($this->cacheKey(), 1, json_encode([
+    Redis::zincrby($this->cacheKey(), 1, json_encode([
         'title' =>  $thread->title,
         'path' => $thread->path()
+    ]));
+  }
+
+  public function delete($thread) 
+  {
+    Redis::zrem($this->cacheKey(), json_encode([
+      'title' =>  $thread->title,
+      'path' => $thread->path()
     ]));
   }
 
