@@ -3540,16 +3540,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["data"],
+  props: ["reply"],
   components: {
     Favorite: _FavoriteComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   computed: {
     ago: function ago() {
-      return moment__WEBPACK_IMPORTED_MODULE_1___default()(this.data.created_at).fromNow();
+      return moment__WEBPACK_IMPORTED_MODULE_1___default()(this.reply.created_at).fromNow();
     }
   },
   created: function created() {
@@ -3562,10 +3565,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       editing: false,
-      reply: this.data,
-      id: this.data.id,
-      body: this.data.body,
-      isBest: this.data.isBest
+      id: this.reply.id,
+      body: this.reply.body,
+      isBest: this.reply.isBest
     };
   },
   methods: {
@@ -62263,7 +62265,7 @@ var render = function() {
           { key: reply.id },
           [
             _c("reply", {
-              attrs: { data: reply },
+              attrs: { reply: reply },
               on: {
                 deleted: function($event) {
                   return _vm.remove(index)
@@ -62321,15 +62323,15 @@ var render = function() {
           _c("div", { staticClass: "level" }, [
             _c("h5", { staticClass: "flex" }, [
               _c("a", {
-                attrs: { href: "/profiles/" + _vm.data.owner.name },
-                domProps: { textContent: _vm._s(_vm.data.owner.name) }
+                attrs: { href: "/profiles/" + _vm.reply.owner.name },
+                domProps: { textContent: _vm._s(_vm.reply.owner.name) }
               }),
               _vm._v("\n                said\n                "),
               _c("span", { domProps: { textContent: _vm._s(_vm.ago) } })
             ]),
             _vm._v(" "),
             _vm.signedIn
-              ? _c("div", [_c("favorite", { attrs: { reply: _vm.data } })], 1)
+              ? _c("div", [_c("favorite", { attrs: { reply: _vm.reply } })], 1)
               : _vm._e()
           ])
         ]
@@ -62390,7 +62392,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           _vm.editing = false
-                          _vm.body = _vm.data.body
+                          _vm.body = _vm.reply.body
                         }
                       }
                     },
@@ -62402,10 +62404,11 @@ var render = function() {
           : _c("div", { domProps: { innerHTML: _vm._s(_vm.body) } })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-footer" }, [
-        _c("div", { staticClass: "level" }, [
-          _vm.authorize("updateReply", _vm.reply)
-            ? _c("div", [
+      _vm.authorize("owns", _vm.reply) ||
+      _vm.authorize("owns", _vm.reply.thread)
+        ? _c("div", { staticClass: "card-footer" }, [
+            _c("div", { staticClass: "level" }, [
+              _c("div", [
                 _c(
                   "button",
                   {
@@ -62427,27 +62430,21 @@ var render = function() {
                   },
                   [_vm._v("\n                    Delete\n                ")]
                 )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: !_vm.isBest,
-                  expression: "!isBest"
-                }
-              ],
-              staticClass: "btn btn-primary btn-sm ml-auto",
-              on: { click: _vm.markBestReply }
-            },
-            [_vm._v("\n                Best Reply\n            ")]
-          )
-        ])
-      ])
+              ]),
+              _vm._v(" "),
+              _vm.authorize("owns", _vm.reply.thread)
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-sm ml-auto",
+                      on: { click: _vm.markBestReply }
+                    },
+                    [_vm._v("\n                Best Reply\n            ")]
+                  )
+                : _vm._e()
+            ])
+          ])
+        : _vm._e()
     ]
   )
 }
@@ -74844,8 +74841,9 @@ var app = new Vue({
 
 var user = window.App.user;
 module.exports = {
-  updateReply: function updateReply(reply) {
-    return reply.user_id == user.id;
+  owns: function owns(model) {
+    var prop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "user_id";
+    return model[prop] == user.id;
   }
 };
 
