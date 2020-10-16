@@ -26,7 +26,6 @@ class ThreadFactory extends Factory
     {
         $title = $this->faker->sentence();
         return [
-            'slug' => Str::slug($title),
             'user_id' => function () {
                 return User::factory()->create()->id;
             },
@@ -34,8 +33,10 @@ class ThreadFactory extends Factory
                 return Channel::factory()->create()->id;
             },
             'title' => $title,
+            'slug' => Str::slug($title),
             'body' => $this->faker->paragraph(),
-            'visits' => 0
+            'visits' => 0,
+            'locked' => false
         ];
     }
 }
