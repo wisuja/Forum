@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         // });
 
         User::factory()->create([
+            'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => '$2y$10$.l6nAxxUdU2gayAYkQW9T.6d/35KCHr.eX3qdN9OrVt5xjX/Skwwu'
         ]);

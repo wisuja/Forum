@@ -43,7 +43,7 @@ class UserFactory extends Factory
     public function administrator() {
         return $this->state(function($attributes) {
             return [
-                'email' => 'admin@gmail.com'
+                'name' => 'admin'
             ];
         });
     }
