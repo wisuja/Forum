@@ -12,10 +12,10 @@
                 <div class="card mt-3">
                     <div class="card-header">
                         <div class="level">
-                            <h5 class="flex">
+                            <h5 class="flex overflow-auto">
                                 <img src="{{ $thread->creator->avatar_path }}" alt="" width="25" height="25">
                                 <a href="{{ route('profile',$thread->creator) }}">{{ $thread->creator->name }}</a> posted:
-                                {{ $thread->title }}
+                                <p>{{ $thread->title }}</p>
                             </h5>
                             @can('update', $thread)
                                 <form action="{{ $thread->path() }}" method="POST">
