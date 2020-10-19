@@ -9,31 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <div class="card mt-3">
-                    <div class="card-header d-flex flex-row">
-                        <h5 class="flex-grow-1 no-margin align-self-center mr-1 w-75">
-                            <img src="{{ $thread->creator->avatar_path }}" alt="" width="25" height="25">
-                            <a href="{{ route('profile',$thread->creator) }}">{{ $thread->creator->name }}</a> posted:
-                            <span>{{ $thread->title }}</span>
-                        </h5>
-                        @can('update', $thread)
-                            <form action="{{ $thread->path() }}" method="POST">
-                                @method('DELETE')
-                                @csrf
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        @endcan
-                    </div>
-    
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-                        {{ $thread->body }}
-                    </div>
-                </div>
+                @include('threads._question')
     
                 <replies @created="repliesCount++" @removed="repliesCount--"></replies>
             </div>
