@@ -108,9 +108,16 @@ class ThreadsController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update(Request $request, Channel $channel, Thread $thread)
     {
-        //
+        $this->authorize('update', $thread);
+
+        $thread->update(request()->validate([
+            'title' => ['required', 'spamfree', 'max:255'],
+            'body' => ['required', 'spamfree'],
+        ]));
+
+        return $thread;
     }
 
     /**
