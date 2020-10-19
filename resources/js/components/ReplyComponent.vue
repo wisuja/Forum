@@ -33,10 +33,7 @@
                     </button>
                     <button
                         class="btn btn-sm btn-link"
-                        @click="
-                            editing = false;
-                            body = reply.body;
-                        "
+                        @click="cancel"
                         type="button"
                     >
                         Cancel
@@ -116,6 +113,10 @@ export default {
             axios.delete("/replies/" + this.id);
 
             this.$emit("deleted", this.id);
+        },
+        cancel() {
+            this.editing = false;
+            this.body = reply.body;
         },
         markBestReply() {
             axios
