@@ -3544,9 +3544,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3591,6 +3588,10 @@ __webpack_require__.r(__webpack_exports__);
     destroy: function destroy() {
       axios["delete"]("/replies/" + this.id);
       this.$emit("deleted", this.id);
+    },
+    cancel: function cancel() {
+      this.editing = false;
+      this.body = reply.body;
     },
     markBestReply: function markBestReply() {
       var _this3 = this;
@@ -3818,13 +3819,39 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       repliesCount: this.thread.replies_count,
-      locked: this.thread.locked
+      locked: this.thread.locked,
+      editing: false,
+      form: {
+        title: this.thread.title,
+        body: this.thread.body
+      }
     };
   },
   methods: {
     toggleLock: function toggleLock() {
-      axios[this.locked ? "delete" : "post"]("/locked-threads/".concat(this.thread.slug));
+      var uri = "/locked-threads/".concat(this.thread.slug);
+      axios[this.locked ? "delete" : "post"](uri);
       this.locked = !this.locked;
+    },
+    update: function update() {
+      var _this = this;
+
+      var uri = "/threads/".concat(this.thread.channel.slug, "/").concat(this.thread.slug);
+      axios.patch(uri, this.form).then(function () {
+        _this.editing = false;
+        flash("Your thread has been updated.");
+      })["catch"](function (error) {
+        if (error.response.status == 422) {
+          flash("We encountered a problem when processing your requests. Please try again later.", "danger");
+        }
+      });
+    },
+    cancel: function cancel() {
+      this.editing = false;
+      this.form = {
+        title: this.thread.title,
+        body: this.thread.body
+      };
     }
   }
 });
@@ -62406,12 +62433,7 @@ var render = function() {
                     {
                       staticClass: "btn btn-sm btn-link",
                       attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.editing = false
-                          _vm.body = _vm.reply.body
-                        }
-                      }
+                      on: { click: _vm.cancel }
                     },
                     [_vm._v("\n                    Cancel\n                ")]
                   )
