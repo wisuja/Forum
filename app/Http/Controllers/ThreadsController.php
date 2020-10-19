@@ -47,9 +47,9 @@ class ThreadsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Recaptcha $recaptcha)
+    public function store(Recaptcha $recaptcha)
     {
-        $this->validate($request, [
+        request()->validate([
             'title' => ['required', 'spamfree', 'max:255'],
             'body' => ['required', 'spamfree'],
             'channel_id' => ['required', 'exists:channels,id'],
@@ -108,7 +108,7 @@ class ThreadsController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Channel $channel, Thread $thread)
+    public function update(Channel $channel, Thread $thread)
     {
         $this->authorize('update', $thread);
 
