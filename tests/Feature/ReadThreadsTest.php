@@ -31,7 +31,7 @@ class ReadThreadsTest extends TestCase
     public function test_a_user_can_view_all_threads()
     {
         $this->get('/threads')
-            ->assertSee($this->thread->title);
+            ->assertSee($this->thread->body);
     }
 
     /**
@@ -59,8 +59,8 @@ class ReadThreadsTest extends TestCase
 
         $this->withoutExceptionHandling()
             ->get("/threads/{$channel->slug}")
-            ->assertSee($threadInChannel->title)
-            ->assertDontSee($threadNotInChannel->title);
+            ->assertSee($threadInChannel->body)
+            ->assertDontSee($threadNotInChannel->body);
     }
 
     /**
@@ -76,8 +76,8 @@ class ReadThreadsTest extends TestCase
         $threadNotByJohn = create(Thread::class);
 
         $this->get('/threads/?by=John')
-            ->assertSee($threadByJohn->title)
-            ->assertDontSee($threadNotByJohn->title);
+            ->assertSee($threadByJohn->body)
+            ->assertDontSee($threadNotByJohn->body);
     }
 
     public function test_a_user_can_filter_threads_by_popularity()
@@ -91,7 +91,7 @@ class ReadThreadsTest extends TestCase
         $threadWithNoReplies = $this->thread;
 
         $this->get('/threads?popular=1')
-            ->assertSeeInOrder([$threadWithThreeReplies->title, $threadWithTwoReplies->title, $threadWithNoReplies->title]);
+            ->assertSeeInOrder([$threadWithThreeReplies->body, $threadWithTwoReplies->body, $threadWithNoReplies->body]);
     }
 
     public function test_a_user_can_filter_threads_by_those_are_unanswered()
@@ -102,7 +102,7 @@ class ReadThreadsTest extends TestCase
         create(Reply::class, ['thread_id' => $threadWithReplies->id]);
 
         $this->get('/threads?unanswered=1')
-            ->assertSee($threadWithNoReplies->title);
+            ->assertSee($threadWithNoReplies->body);
     }
 
     public function test_a_user_can_request_all_replies_for_a_given_thread()
