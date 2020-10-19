@@ -7,13 +7,13 @@ use App\Models\Thread;
 use App\Models\User;
 use App\Notifications\ThreadWasUpdated;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function setUp(): void
     {
@@ -22,41 +22,21 @@ class ThreadTest extends TestCase
         $this->thread = create(Thread::class);
     }
 
-    /**
-     * test_a_thread_can_make_a_string_path
-     *
-     * @return void
-     */
     public function test_a_thread_has_a_path()
     {
         $this->assertEquals("/threads/{$this->thread->channel->slug}/{$this->thread->slug}", $this->thread->path());
     }
 
-    /**
-     * test_a_thread_has_a_creator
-     *
-     * @return void
-     */
     public function test_a_thread_has_a_creator()
     {
         $this->assertInstanceOf(User::class, $this->thread->creator);
     }
 
-    /**
-     * test_a_thread_has_replies
-     *
-     * @return void
-     */
     public function test_a_thread_has_replies()
     {
         $this->assertInstanceOf(Collection::class, $this->thread->replies);
     }
 
-    /**
-     * test_a_thread_can_add_a_reply
-     *
-     * @return void
-     */
     public function test_a_thread_can_add_a_reply()
     {
         $this->thread->addReply([
@@ -82,11 +62,6 @@ class ThreadTest extends TestCase
         Notification::assertSentTo(auth()->user(), ThreadWasUpdated::class);
     }
 
-    /**
-     * test_a_thread_belongs_to_a_channel
-     *
-     * @return void
-     */
     public function test_a_thread_belongs_to_a_channel()
     {
         $this->assertInstanceOf(Channel::class, $this->thread->channel);

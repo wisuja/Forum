@@ -4,19 +4,13 @@ namespace Tests\Feature;
 
 use App\Models\Reply;
 use App\Models\Thread;
-use Exception;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ParticipateInThreadTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
-    /**
-     * test_an_authenticated_user_can_add_a_reply_in_a_thread
-     *
-     * @return void
-     */
     public function test_an_authenticated_user_can_add_a_reply_in_a_thread()
     {
         $this->signIn();
@@ -29,11 +23,6 @@ class ParticipateInThreadTest extends TestCase
         $this->assertDatabaseHas('replies', ['body' => $reply->body]);
     }
 
-    /**
-     * test_an_unauthenticated_user_can_not_add_a_reply_in_a_thread
-     *
-     * @return void
-     */
     public function test_an_unauthenticated_user_can_not_add_a_reply_in_a_thread()
     {
         $this->withExceptionHandling()
@@ -41,11 +30,6 @@ class ParticipateInThreadTest extends TestCase
             ->assertRedirect(route('login'));
     }
 
-    /**
-     * test_a_reply_require_a_body
-     *
-     * @return void
-     */
     public function test_a_reply_require_a_body()
     {
         $this->signIn();

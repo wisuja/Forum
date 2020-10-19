@@ -4,12 +4,12 @@ namespace Tests\Unit;
 
 use App\Models\Reply;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function test_a_user_can_fetch_their_most_recent_replies()
     {

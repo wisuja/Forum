@@ -4,15 +4,12 @@ namespace Tests\Feature;
 
 use App\Models\Thread;
 use App\Models\Trending;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Redis;
 use Tests\TestCase;
 
 class TrendingThreadTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function setUp() :void 
     {

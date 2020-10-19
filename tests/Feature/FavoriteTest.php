@@ -3,14 +3,12 @@
 namespace Tests\Feature;
 
 use App\Models\Reply;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class FavoriteTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function test_an_authenticated_user_can_favorite_any_reply()
     {

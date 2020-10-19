@@ -5,18 +5,13 @@ namespace Tests\Unit;
 use App\Models\Reply;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ReplyTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
-    /**
-     * test_it_has_an_owner
-     *
-     * @return void
-     */
     public function test_it_has_an_owner()
     {
         $reply = create(Reply::class);

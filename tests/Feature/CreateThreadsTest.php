@@ -41,11 +41,6 @@ class CreateThreadsTest extends TestCase
             ->assertSessionHas('flash');
     }
 
-    /**
-     * test_an_authenticated_user_can_create_new_forum_threads
-     *
-     * @return void
-     */
     public function test_an_authenticated_user_can_create_new_forum_threads()
     {
         $response = $this->publishThread(['title' => 'title']);
@@ -54,11 +49,6 @@ class CreateThreadsTest extends TestCase
             ->assertSee('title');
     }
 
-    /**
-     * test_guests_can_not_create_threads
-     *
-     * @return void
-     */
     public function test_guests_can_not_create_threads()
     {
         $this->get('/threads/create')
@@ -68,11 +58,6 @@ class CreateThreadsTest extends TestCase
             ->assertRedirect(route('login'));
     }
 
-    /**
-     * test_a_thread_require_a_title
-     *
-     * @return void
-     */
     public function test_a_thread_require_a_title()
     {
         $this->publishThread(['title' => null])
@@ -104,11 +89,6 @@ class CreateThreadsTest extends TestCase
 
         $this->assertEquals("some-title-24-{$thread['id']}", $thread['slug']);    }
 
-    /**
-     * test_a_thread_require_a_body
-     *
-     * @return void
-     */
     public function test_a_thread_require_a_body()
     {
         $this->publishThread(['body' => null])
@@ -132,38 +112,6 @@ class CreateThreadsTest extends TestCase
 
         $this->publishThread(['channel_id' => 999])
             ->assertSessionHasErrors('channel_id');
-    }
-
-    public function test_an_authorized_users_can_delete_a_thread()
-    {
-        $this->signIn();
-
-        $thread = create(Thread::class, ['user_id' => auth()->id()]);
-
-        $reply = create(Reply::class, ['thread_id' => $thread->id]);
-
-        $this->json('DELETE', $thread->path())
-            ->assertStatus(204);
-
-        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
-        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
-
-        $this->assertEquals(0, Activity::count());
-    }
-
-    public function test_an_unauthorized_users_can_not_delete_threads()
-    {
-        $thread = create(Thread::class);
-
-        $this->withExceptionHandling()
-            ->delete($thread->path())
-            ->assertRedirect(route('login'));
-
-        $this->signIn();
-
-        $this->withExceptionHandling()
-            ->delete($thread->path())
-            ->assertStatus(403);
     }
 
     function publishThread($override = null)

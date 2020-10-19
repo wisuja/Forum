@@ -6,14 +6,12 @@ use App\Models\Channel;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Facade;
 use Tests\TestCase;
 
 class ReadThreadsTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function setUp(): void
     {
@@ -22,23 +20,11 @@ class ReadThreadsTest extends TestCase
         $this->thread = create(Thread::class);
     }
 
-    /**
-     * test_a_user_can_view_all_threads
-     *
-     * @return void
-     */
-
     public function test_a_user_can_view_all_threads()
     {
         $this->get('/threads')
             ->assertSee($this->thread->body);
     }
-
-    /**
-     * test_a_user_can_view_a_single_thread
-     *
-     * @return void
-     */
 
     public function test_a_user_can_view_a_single_thread()
     {
@@ -46,11 +32,6 @@ class ReadThreadsTest extends TestCase
             ->assertSee($this->thread->id);
     }
 
-    /**
-     * test_a_user_can_filter_threads_according_to_a_channel
-     *
-     * @return void
-     */
     public function test_a_user_can_filter_threads_according_to_a_channel()
     {
         $channel = create(Channel::class);
@@ -63,11 +44,6 @@ class ReadThreadsTest extends TestCase
             ->assertDontSee($threadNotInChannel->body);
     }
 
-    /**
-     * test_a_user_can_filter_threads_by_any_username
-     *
-     * @return void
-     */
     public function test_a_user_can_filter_threads_by_any_username()
     {
         $this->signIn(create(User::class, ['name' => 'John']));
