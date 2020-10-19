@@ -42,6 +42,10 @@
         [v-cloak] {
             display: none
         }
+
+        .no-margin {
+            margin: 0;
+        }
     </style>
 
     @yield('head')
