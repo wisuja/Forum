@@ -26,5 +26,8 @@ This is a forum app built using Laravel 8
 -   [x] User can must confirm their email address before creating a thread
 -   [x] User can mark the best reply in a thread
 -   [x] Administrator may lock or unlock a thread
+-   [x] User must verify recaptcha
+-   [x] User can update a thread
+-   [x] User can search for threads
 
 _The features will be added along the way_
