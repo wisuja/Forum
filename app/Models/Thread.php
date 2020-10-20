@@ -6,13 +6,17 @@ use App\Events\ThreadReceivedNewReply;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class Thread extends Model
 {
     use HasFactory;
     use RecordActivity;
+    use Searchable;
 
     protected $guarded = [];
+
+    protected $with = ['channel', 'creator'];
 
     protected $withCount = ['replies'];
 
