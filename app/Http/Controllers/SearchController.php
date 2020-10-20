@@ -9,13 +9,13 @@ class SearchController extends Controller
 {
     public function show() 
     {
-        $threads = Thread::search(request('q'))->paginate(25);
+        $query = request('q');
 
         if(request()->expectsJson()) 
         {
-            return $threads;
+            return Thread::search($query)->paginate(25);
         }
 
-        return view('threads.search', compact('threads'));
+        return view('threads.search', compact('query'));
     }
 }
