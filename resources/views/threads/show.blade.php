@@ -17,11 +17,6 @@
             <div class="col-md-4">
                 <div class="card mt-3">
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
                         <p>
                             The thread was created on {{ $thread->created_at->diffForHumans() }} by
                             <a href="{{ route('profile',$thread->creator) }}">{{ $thread->creator->name }}</a>, and currently have <span v-text="repliesCount"></span> {{ Str::plural('comment', $thread->replies_count) }}.
