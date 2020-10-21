@@ -40,7 +40,8 @@
                       </div>
                       <div class="form-group">
                         <label for="body">Body:</label>
-                        <textarea name="body" id="body" class="form-control" rows="5" required>{{ old('body') }}</textarea>
+                        <wysiwyg name="body"></wysiwyg>
+                        {{-- <textarea name="body" id="body" class="form-control" rows="5" required>{{ old('body') }}</textarea> --}}
                       </div>
                       <div class="form-group">
                         <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITEKEY') }}"></div>
