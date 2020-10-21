@@ -119,6 +119,11 @@ class Thread extends Model
             ->exists();
     }
 
+    public function getBodyAttribute($body) 
+    {
+        return \Purifier::clean($body);
+    }
+
     public function hasUpdatesFor($user = null)
     {
         $user = $user ?: auth()->user();

@@ -44,8 +44,14 @@ class Reply extends Model
         return $matches[1];
     }
 
-    public function setBodyAttribute($body) {
-        $this->attributes['body'] = preg_replace('/@([\w\-]+)/', '<a href="/profiles/$1">$0</a>', $body);
+    // public function setBodyAttribute($body) {
+    //     $this->attributes['body'] = preg_replace('/@([\w\-]+)/', '<a href="/profiles/$1">$0</a>', $body);
+    // }
+
+    
+    public function getBodyAttribute($body) 
+    {
+        return \Purifier::clean($body);
     }
 
     public function isBest() 
