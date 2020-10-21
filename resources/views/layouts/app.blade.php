@@ -48,6 +48,8 @@
         }
     </style>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.0/trix.css">
+
     @yield('head')
 </head>
 <body>
