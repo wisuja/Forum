@@ -39,7 +39,7 @@ class ReplyTest extends TestCase
         $reply = create(Reply::class, ['body' => 'Hello @JaneDoe.']);
 
         $this->assertEquals(
-            'Hello <a href="/profiles/JaneDoe">@JaneDoe</a>.',
+            '<p>Hello <a href="/profiles/JaneDoe">@JaneDoe</a>.</p>',
             $reply->body);
     }
 
