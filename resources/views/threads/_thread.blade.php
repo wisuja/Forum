@@ -17,13 +17,13 @@
     </div>
   </div>
   <div class="card-body">
-    @if (Str::length($thread->body) < 200)
-      {{ $thread->body }}
-    @else
+    {{-- @if (Str::length($thread->body) < 200) --}}
+      {!! $thread->body !!}
+    {{-- @else
       {{ Str::limit($thread->body, 200, '...') }}
       <br>
       <a href="{{ $thread->path() }}">Read more...</a>
-    @endif
+    @endif --}}
   </div>
   <div class="card-footer">
     {{ $thread->visits }} visits.
