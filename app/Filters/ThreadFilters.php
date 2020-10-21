@@ -17,7 +17,8 @@ class ThreadFilters extends Filters
 
   public function popular()
   {
-    return $this->builder->reorder('replies_count', 'desc');
+    return $this->builder->orderBy('replies_count', 'desc')
+                          ->orderBy('visits', 'desc');
   }
 
   public function unanswered()
