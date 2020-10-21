@@ -20,12 +20,13 @@
             <div v-if="editing">
                 <form @submit.prevent="update">
                     <div class="form-group">
-                        <textarea
+                        <wysiwyg v-model="body" name="body"></wysiwyg>
+                        <!-- <textarea
                             class="form-control"
                             rows="5"
                             v-model="body"
                             required
-                        ></textarea>
+                        ></textarea> -->
                     </div>
 
                     <button class="btn btn-sm btn-primary" type="submit">
@@ -116,7 +117,7 @@ export default {
         },
         cancel() {
             this.editing = false;
-            this.body = reply.body;
+            this.body = this.reply.body;
         },
         markBestReply() {
             axios
@@ -132,13 +133,13 @@ export default {
                     }
                 });
         }
-    },
-    watch: {
-        editing() {
-            if (this.editing) {
-                this.body = this.body.replace(/<a[^>]*>|<[^>]*>/gi, "");
-            }
-        }
     }
+    // watch: {
+    //     editing() {
+    //         if (this.editing) {
+    //             this.body = this.body.replace(/<a[^>]*>|<[^>]*>/gi, "");
+    //         }
+    //     }
+    // }
 };
 </script>
