@@ -2,7 +2,15 @@
     <div>
         <div v-if="signedIn">
             <div class="form-group">
-                <textarea
+                <wysiwyg
+                    name="body"
+                    id="body"
+                    v-model="body"
+                    placeholder="Have something to say?"
+                    :shouldClear="completed"
+                    @cleared="resetCompleted"
+                ></wysiwyg>
+                <!-- <textarea
                     name="body"
                     id="body"
                     class="form-control"
@@ -10,7 +18,7 @@
                     placeholder="Have something to say?"
                     v-model="body"
                     required
-                ></textarea>
+                ></textarea> -->
             </div>
             <button type="submit" class="btn btn-primary" @click="addReply">
                 Post
@@ -32,7 +40,8 @@ import "jquery.caret";
 export default {
     data() {
         return {
-            body: ""
+            body: "",
+            completed: false
         };
     },
     mounted() {
@@ -56,6 +65,7 @@ export default {
                 .post(location.pathname + "/replies", { body: this.body })
                 .then(({ data }) => {
                     this.body = "";
+                    this.completed = true;
 
                     flash("Your reply has been posted.");
 
@@ -64,6 +74,9 @@ export default {
                 .catch(({ response: { data } }) => {
                     flash(data, "danger");
                 });
+        },
+        resetCompleted() {
+            this.completed = false;
         }
     }
 };
