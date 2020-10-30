@@ -24,10 +24,14 @@ This is a forum app built using Laravel 8
 -   [x] User can view trending threads
 -   [x] User can change their avatar
 -   [x] User can must confirm their email address before creating a thread
--   [x] User can mark the best reply in a thread
+    <!-- -   [x] User can mark the best reply in a thread -->
 -   [x] Administrator may lock or unlock a thread
 -   [x] User must verify recaptcha
 -   [x] User can update a thread
 -   [x] User can search for threads
+-   [] User can post pictures in post / reply
+-   [] User can post code in post / reply
+-   [] A thread auto locked itself when it has 2k replies
+-   [] User can give other users stars. (Limited to 3 daily)
 
 _The features will be added along the way_
