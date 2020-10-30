@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Filters\ThreadFilters;
 use App\Models\Channel;
 use App\Models\Thread;
-use App\Models\Trending;
 use App\Rules\Recaptcha;
 use Illuminate\Http\Request;
 
@@ -21,14 +20,11 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel, ThreadFilters $filters, Trending $trending)
+    public function index(Channel $channel, ThreadFilters $filters)
     {
         $threads = $this->getThreads($channel, $filters);
         
-        return view('threads.index', [
-            'threads' => $threads,
-            'trending' => $trending->get()
-        ]);
+        return view('threads.index', compact('threads'));
     }
 
     /**
@@ -77,13 +73,13 @@ class ThreadsController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channelSlug, Thread $thread, Trending $trending)
+    public function show($channelSlug, Thread $thread)
     {
         if (auth()->check()) {
             auth()->user()->read($thread);
         }
 
-        $trending->push($thread);
+        // $trending->push($thread);
         
         $thread->increment('visits');
 
@@ -126,13 +122,13 @@ class ThreadsController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy($channelSlug, Thread $thread, Trending $trending)
+    public function destroy($channelSlug, Thread $thread)
     {
         $this->authorize('update', $thread);
 
         $thread->delete();
 
-        $trending->delete($thread);
+        // $trending->delete($thread);
         
         if (request()->wantsJson()) {
             return response([], 204);

@@ -25,7 +25,7 @@
                 </div>
             </div>
 
-            @if (count($trending))
+            {{-- @if (count($trending))
             <div class="card">
                 <div class="card-header">
                     Trending pages
@@ -40,7 +40,7 @@
                     </ul>
                 </div>
             </div>
-            @endif
+            @endif --}}
         </div>
     </div>
 </div>
