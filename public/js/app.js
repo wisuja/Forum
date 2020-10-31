@@ -8750,9 +8750,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -80839,8 +80836,7 @@ var render = function() {
           : _c("div", { domProps: { innerHTML: _vm._s(_vm.body) } })
       ]),
       _vm._v(" "),
-      _vm.authorize("owns", _vm.reply) ||
-      _vm.authorize("owns", _vm.reply.thread)
+      _vm.authorize("owns", _vm.reply)
         ? _c("div", { staticClass: "card-footer" }, [
             _c("div", { staticClass: "level" }, [
               _c("div", [
