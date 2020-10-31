@@ -132,13 +132,18 @@ class Thread extends Model
         return $this->updated_at > cache($key);
     }
 
-    public function setBestReply($reply) 
-    {
-        $this->update(['best_reply_id' => $reply->id]);
-    }
+    // public function setBestReply($reply) 
+    // {
+    //     $this->update(['best_reply_id' => $reply->id]);
+    // }
 
     public function toSearchableArray()
     {
         return $this->toArray() + ['path' => $this->path()];
+    }
+
+    public function getTrendingThreads() 
+    {
+        return $this->orderBy('visits', 'desc')->where('visits', '>', 0)->limit(5)->get();
     }
 }
