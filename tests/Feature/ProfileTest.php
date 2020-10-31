@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -20,15 +19,15 @@ class ProfileTest extends TestCase
             ->assertSee($user->name);
     }
 
-    public function test_profiles_display_all_threads_created_by_the_associated_user()
-    {
-        $this->signIn();
+    // public function test_profiles_display_all_threads_created_by_the_associated_user()
+    // {
+    //     $this->signIn();
 
-        $thread = create(Thread::class, ['user_id' => auth()->id()]);
+    //     $thread = create(Thread::class, ['user_id' => auth()->id()]);
 
-        $this->withoutExceptionHandling()
-            ->get("/profiles/" . auth()->user()->name)
-            ->assertSee($thread->title)
-            ->assertSee($thread->body);
-    }
+    //     $this->withoutExceptionHandling()
+    //         ->get("/profiles/" . auth()->user()->name)
+    //         ->assertSee($thread->title)
+    //         ->assertSee($thread->body);
+    // }
 }
