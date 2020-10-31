@@ -23,8 +23,9 @@ class ThreadsController extends Controller
     public function index(Channel $channel, ThreadFilters $filters)
     {
         $threads = $this->getThreads($channel, $filters);
+        $trending = resolve(Thread::class)->getTrendingThreads();
         
-        return view('threads.index', compact('threads'));
+        return view('threads.index', compact('threads', 'trending'));
     }
 
     /**
@@ -137,13 +138,6 @@ class ThreadsController extends Controller
         return redirect('/threads');
     }
 
-    /**
-     * getThreads
-     *
-     * @param  mixed $channel
-     * @param  mixed $filters
-     * @return void
-     */
     public function getThreads(Channel $channel, ThreadFilters $filters)
     {
         $threads = Thread::with('channel')->latest()->filter($filters);
