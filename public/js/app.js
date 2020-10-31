@@ -8639,7 +8639,8 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [_mixins_Collection__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
-      dataSet: false
+      dataSet: false,
+      items: false
     };
   },
   created: function created() {
@@ -8764,29 +8765,26 @@ __webpack_require__.r(__webpack_exports__);
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(this.reply.created_at).fromNow();
     }
   },
-  created: function created() {
-    var _this = this;
-
-    window.events.$on("best-reply-selected", function (id) {
-      _this.isBest = id == _this.id;
-    });
+  created: function created() {// window.events.$on("best-reply-selected", id => {
+    //     this.isBest = id == this.id;
+    // });
   },
   data: function data() {
     return {
       editing: false,
       id: this.reply.id,
-      body: this.reply.body,
-      isBest: this.reply.isBest
+      body: this.reply.body // isBest: this.reply.isBest
+
     };
   },
   methods: {
     update: function update() {
-      var _this2 = this;
+      var _this = this;
 
       axios.patch("/replies/" + this.id, {
         body: this.body
       }).then(function () {
-        _this2.editing = false;
+        _this.editing = false;
         flash("Reply has been updated.");
       })["catch"](function (_ref) {
         var data = _ref.response.data;
@@ -8800,19 +8798,20 @@ __webpack_require__.r(__webpack_exports__);
     cancel: function cancel() {
       this.editing = false;
       this.body = this.reply.body;
-    },
-    markBestReply: function markBestReply() {
-      var _this3 = this;
+    } // markBestReply() {
+    //     axios
+    //         .post(`/replies/${this.id}/best`)
+    //         .then(() => {
+    //             window.events.$emit("best-reply-selected", this.id);
+    //             flash("You marked this reply as the best reply");
+    //         })
+    //         .catch(error => {
+    //             if (error) {
+    //                 flash("You cannot do this action", "danger");
+    //             }
+    //         });
+    // }
 
-      axios.post("/replies/".concat(this.id, "/best")).then(function () {
-        window.events.$emit("best-reply-selected", _this3.id);
-        flash("You marked this reply as the best reply");
-      })["catch"](function (error) {
-        if (error) {
-          flash("You cannot do this action", "danger");
-        }
-      });
-    }
   } // watch: {
   //     editing() {
   //         if (this.editing) {
@@ -9198,6 +9197,10 @@ __webpack_require__.r(__webpack_exports__);
         title: this.thread.title,
         body: this.thread.body
       };
+    },
+    updateFormPanel: function updateFormPanel(item) {
+      this.repliesCount++;
+      this.locked = item.isThreadLocked;
     }
   }
 });
@@ -80763,29 +80766,22 @@ var render = function() {
     "div",
     { staticClass: "card mt-3", attrs: { id: "reply_" + _vm.id } },
     [
-      _c(
-        "div",
-        {
-          staticClass: "card-header",
-          class: _vm.isBest ? "bg-success text-white" : ""
-        },
-        [
-          _c("div", { staticClass: "level" }, [
-            _c("h5", { staticClass: "flex" }, [
-              _c("a", {
-                attrs: { href: "/profiles/" + _vm.reply.owner.name },
-                domProps: { textContent: _vm._s(_vm.reply.owner.name) }
-              }),
-              _vm._v("\n                said\n                "),
-              _c("span", { domProps: { textContent: _vm._s(_vm.ago) } })
-            ]),
-            _vm._v(" "),
-            _vm.signedIn
-              ? _c("div", [_c("favorite", { attrs: { reply: _vm.reply } })], 1)
-              : _vm._e()
-          ])
-        ]
-      ),
+      _c("div", { staticClass: "card-header" }, [
+        _c("div", { staticClass: "level" }, [
+          _c("h5", { staticClass: "flex" }, [
+            _c("a", {
+              attrs: { href: "/profiles/" + _vm.reply.owner.name },
+              domProps: { textContent: _vm._s(_vm.reply.owner.name) }
+            }),
+            _vm._v("\n                said\n                "),
+            _c("span", { domProps: { textContent: _vm._s(_vm.ago) } })
+          ]),
+          _vm._v(" "),
+          _vm.signedIn
+            ? _c("div", [_c("favorite", { attrs: { reply: _vm.reply } })], 1)
+            : _vm._e()
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
         _vm.editing
@@ -80869,18 +80865,7 @@ var render = function() {
                   },
                   [_vm._v("\n                    Delete\n                ")]
                 )
-              ]),
-              _vm._v(" "),
-              _vm.authorize("owns", _vm.reply.thread)
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary btn-sm ml-auto",
-                      on: { click: _vm.markBestReply }
-                    },
-                    [_vm._v("\n                Best Reply\n            ")]
-                  )
-                : _vm._e()
+              ])
             ])
           ])
         : _vm._e()
@@ -103418,7 +103403,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     add: function add(item) {
       this.items.push(item);
-      this.$emit("created");
+      this.$emit("created", item);
     },
     remove: function remove(index) {
       this.items.splice(index, 1);
