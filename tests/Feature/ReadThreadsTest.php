@@ -23,13 +23,13 @@ class ReadThreadsTest extends TestCase
     public function test_a_user_can_view_all_threads()
     {
         $this->get('/threads')
-            ->assertSee($this->thread->body);
+            ->assertSee($this->thread->title);
     }
 
     public function test_a_user_can_view_a_single_thread()
     {
         $this->get($this->thread->path())
-            ->assertSee($this->thread->id);
+            ->assertSee($this->thread->title);
     }
 
     public function test_a_user_can_filter_threads_according_to_a_channel()
@@ -40,8 +40,8 @@ class ReadThreadsTest extends TestCase
 
         $this->withoutExceptionHandling()
             ->get("/threads/{$channel->slug}")
-            ->assertSee($threadInChannel->body)
-            ->assertDontSee($threadNotInChannel->body);
+            ->assertSee($threadInChannel->title)
+            ->assertDontSee($threadNotInChannel->title);
     }
 
     public function test_a_user_can_filter_threads_by_any_username()
@@ -52,8 +52,8 @@ class ReadThreadsTest extends TestCase
         $threadNotByJohn = create(Thread::class);
 
         $this->get('/threads/?by=John')
-            ->assertSee($threadByJohn->body)
-            ->assertDontSee($threadNotByJohn->body);
+            ->assertSee($threadByJohn->title)
+            ->assertDontSee($threadNotByJohn->title);
     }
 
     public function test_a_user_can_filter_threads_by_popularity()
@@ -67,7 +67,7 @@ class ReadThreadsTest extends TestCase
         $threadWithNoReplies = $this->thread;
 
         $this->get('/threads?popular=1')
-            ->assertSeeInOrder([$threadWithThreeReplies->body, $threadWithTwoReplies->body, $threadWithNoReplies->body]);
+            ->assertSeeInOrder([$threadWithThreeReplies->title, $threadWithTwoReplies->title, $threadWithNoReplies->title]);
     }
 
     public function test_a_user_can_filter_threads_by_those_are_unanswered()
@@ -78,7 +78,7 @@ class ReadThreadsTest extends TestCase
         create(Reply::class, ['thread_id' => $threadWithReplies->id]);
 
         $this->get('/threads?unanswered=1')
-            ->assertSee($threadWithNoReplies->body);
+            ->assertSee($threadWithNoReplies->title);
     }
 
     public function test_a_user_can_request_all_replies_for_a_given_thread()

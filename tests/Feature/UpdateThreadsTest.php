@@ -35,7 +35,7 @@ class UpdateThreadsTest extends TestCase
 
         tap($this->thread->fresh(), function ($thread){
             $this->assertEquals('Changed title', $thread->title);
-            $this->assertEquals('Changed body', $thread->body);
+            $this->assertEquals('<p>Changed body</p>', $thread->body);
         });
     }
 
