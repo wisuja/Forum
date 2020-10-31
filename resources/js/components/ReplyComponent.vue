@@ -43,10 +43,7 @@
             </div>
             <div v-else v-html="body"></div>
         </div>
-        <div
-            class="card-footer"
-            v-if="authorize('owns', reply) || authorize('owns', reply.thread)"
-        >
+        <div class="card-footer" v-if="authorize('owns', reply)">
             <div class="level">
                 <div>
                     <button
