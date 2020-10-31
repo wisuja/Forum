@@ -63,4 +63,4 @@ Route::post('/api/users/{user}/avatar', [UserAvatarsController::class, 'store'])
 
 Route::get('/register/confirm', [RegisterConfirmationsController::class, 'index'])->name('register.confirm');
 
-Route::post('/replies/{reply}/best', [BestRepliesController::class, 'store'])->name('best-replies.store');
+// Route::post('/replies/{reply}/best', [BestRepliesController::class, 'store'])->name('best-replies.store');

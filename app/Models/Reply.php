@@ -16,7 +16,7 @@ class Reply extends Model
 
     protected $with = ['owner', 'favorites'];
 
-    protected $appends = ['favoritesCount', 'isFavorited', 'isBest'];
+    protected $appends = ['favoritesCount', 'isFavorited'];
 
     public function owner()
     {
@@ -53,13 +53,13 @@ class Reply extends Model
         return \Purifier::clean($body);
     }
 
-    public function isBest() 
-    {
-        return $this->thread->best_reply_id == $this->id;
-    }
+    // public function isBest() 
+    // {
+    //     return $this->thread->best_reply_id == $this->id;
+    // }
 
-    public function getIsBestAttribute() 
-    {
-        return $this->isBest();
-    }
+    // public function getIsBestAttribute() 
+    // {
+    //     return $this->isBest();
+    // }
 }

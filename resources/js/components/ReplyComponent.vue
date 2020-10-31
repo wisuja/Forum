@@ -1,6 +1,6 @@
 <template>
     <div :id="'reply_' + id" class="card mt-3">
-        <div class="card-header" :class="isBest ? 'bg-success text-white' : ''">
+        <div class="card-header">
             <div class="level">
                 <h5 class="flex">
                     <a
@@ -59,13 +59,13 @@
                         Delete
                     </button>
                 </div>
-                <button
+                <!-- <button
                     class="btn btn-primary btn-sm ml-auto"
                     @click="markBestReply"
                     v-if="authorize('owns', reply.thread)"
                 >
                     Best Reply
-                </button>
+                </button> -->
             </div>
         </div>
     </div>
@@ -83,16 +83,16 @@ export default {
         }
     },
     created() {
-        window.events.$on("best-reply-selected", id => {
-            this.isBest = id == this.id;
-        });
+        // window.events.$on("best-reply-selected", id => {
+        //     this.isBest = id == this.id;
+        // });
     },
     data() {
         return {
             editing: false,
             id: this.reply.id,
-            body: this.reply.body,
-            isBest: this.reply.isBest
+            body: this.reply.body
+            // isBest: this.reply.isBest
         };
     },
     methods: {
@@ -118,21 +118,21 @@ export default {
         cancel() {
             this.editing = false;
             this.body = this.reply.body;
-        },
-        markBestReply() {
-            axios
-                .post(`/replies/${this.id}/best`)
-                .then(() => {
-                    window.events.$emit("best-reply-selected", this.id);
-
-                    flash("You marked this reply as the best reply");
-                })
-                .catch(error => {
-                    if (error) {
-                        flash("You cannot do this action", "danger");
-                    }
-                });
         }
+        // markBestReply() {
+        //     axios
+        //         .post(`/replies/${this.id}/best`)
+        //         .then(() => {
+        //             window.events.$emit("best-reply-selected", this.id);
+
+        //             flash("You marked this reply as the best reply");
+        //         })
+        //         .catch(error => {
+        //             if (error) {
+        //                 flash("You cannot do this action", "danger");
+        //             }
+        //         });
+        // }
     }
     // watch: {
     //     editing() {

@@ -43,16 +43,16 @@ class ReplyTest extends TestCase
             $reply->body);
     }
 
-    public function test_it_knows_if_it_is_the_best_reply() 
-    {
-        $reply = create(Reply::class);
+    // public function test_it_knows_if_it_is_the_best_reply() 
+    // {
+    //     $reply = create(Reply::class);
 
-        $this->assertFalse($reply->isBest());
+    //     $this->assertFalse($reply->isBest());
 
-        $reply->thread->setBestReply($reply);
+    //     $reply->thread->setBestReply($reply);
 
-        $this->assertTrue($reply->fresh()->isBest());
-    }
+    //     $this->assertTrue($reply->fresh()->isBest());
+    // }
 
     public function test_a_reply_sanitizes_its_own_body_automatically() 
     {
