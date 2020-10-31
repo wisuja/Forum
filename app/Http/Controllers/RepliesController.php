@@ -10,9 +10,12 @@ use Illuminate\Http\Request;
 
 class RepliesController extends Controller
 {
+    private $limit;
+
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
+        $this->limit = 5;
     }
 
     public function index($channelId, Thread $thread)
@@ -26,10 +29,21 @@ class RepliesController extends Controller
             return response('Thread is locked', 422);
         }
 
-        return $thread->addReply([
+        $reply = $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id()
-        ])->load('owner');
+        ]);
+
+        tap($thread->fresh(), function ($thread) {
+            if($thread->replies_count > $this->limit) {
+                $thread->update(['locked' => true]);
+            }
+        });
+        $reply = $reply->load('owner');
+
+        $reply->isThreadLocked = $thread->fresh()->locked;
+
+        return $reply;
     }
 
     public function update(Reply $reply)

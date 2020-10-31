@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-<link rel="stylesheet" href="{{ secure_asset('css/vendor/jquery.atwho.css') }}">
+<link rel="stylesheet" href="{{ asset('css/vendor/jquery.atwho.css') }}">
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
             <div class="col-md-8">
                 @include('threads._question')
     
-                <replies @created="repliesCount++" @removed="repliesCount--"></replies>
+                <replies @created="updateFormPanel" @removed="repliesCount--"></replies>
             </div>
     
             <div class="col-md-4">
@@ -24,7 +24,7 @@
 
                         <p>
                             <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}" v-if="signedIn"></subscribe-button>
-                            <button type="submit" class="btn btn-outline-danger" v-if="authorize('isAdmin')" @click="toggleLock" v-text="locked ? 'Unlock' : 'Lock'"></button>
+                            <button type="submit" class="btn btn-outline-danger ml-3" v-if="authorize('isAdmin')" @click="toggleLock" v-text="locked ? 'Unlock' : 'Lock'"></button>
                         </p>
                     </div>
                 </div>

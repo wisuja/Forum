@@ -23,7 +23,8 @@ export default {
     mixins: [Collection],
     data() {
         return {
-            dataSet: false
+            dataSet: false,
+            items: false
         };
     },
 

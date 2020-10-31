@@ -46,6 +46,10 @@ export default {
                 title: this.thread.title,
                 body: this.thread.body
             };
+        },
+        updateFormPanel(item) {
+            this.repliesCount++;
+            this.locked = item.isThreadLocked;
         }
     }
 };
