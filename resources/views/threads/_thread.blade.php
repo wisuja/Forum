@@ -2,12 +2,19 @@
   <div class="card-header d-flex flex-column">
     <h5>
       <a href="{{ $thread->path() }}">
-        @if (auth()->check() && $thread->hasUpdatesFor(auth()->user()))
+        {{-- @if (auth()->check() && $thread->hasUpdatesFor(auth()->user()))
           <strong>
             {{ Str::limit($thread->title, 35, '...')  }}
           </strong>
         @else
           {{ Str::limit($thread->title, 35, '...')  }}
+        @endif --}}
+        @if (auth()->check() && $thread->hasUpdatesFor(auth()->user()))
+          <strong>
+            {{ $thread->title  }}
+          </strong>
+        @else
+          {{ $thread->title  }}
         @endif
       </a>
     </h5>
