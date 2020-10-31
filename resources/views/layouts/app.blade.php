@@ -10,7 +10,11 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    @if (env('APP_ENV') == 'local')
+        <script src="{{ asset('js/app.js') }}" defer></script>
+    @else
+        <script src="{{ secure_asset('js/app.js') }}" defer></script>
+    @endif
 
     <script>
         window.App = {!! json_encode([
@@ -24,7 +28,12 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @if (env('APP_ENV') == 'local')
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @else
+        <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+    @endif
+    
     <style>
         body {
             padding-bottom: 100px;
