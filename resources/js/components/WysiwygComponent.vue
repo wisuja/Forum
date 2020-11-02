@@ -29,14 +29,9 @@ export default {
 
 <style>
 .trix-button--icon-heading-1,
-.trix-button--icon-quote,
-.trix-button--icon-code,
 .trix-button--icon-decrease-nesting-level,
 .trix-button--icon-increase-nesting-level,
-.trix-button--icon-attach {
-    display: none;
-}
-
+.trix-button--icon-attach,
 span[data-trix-button-group="file-tools"] {
     display: none;
 }
