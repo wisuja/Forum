@@ -8750,6 +8750,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -13674,7 +13679,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.trix-button--icon-heading-1,\r\n.trix-button--icon-quote,\r\n.trix-button--icon-code,\r\n.trix-button--icon-decrease-nesting-level,\r\n.trix-button--icon-increase-nesting-level,\r\n.trix-button--icon-attach {\r\n    display: none;\n}\nspan[data-trix-button-group=\"file-tools\"] {\r\n    display: none;\n}\r\n", ""]);
+exports.push([module.i, "\n.trix-button--icon-heading-1,\r\n.trix-button--icon-decrease-nesting-level,\r\n.trix-button--icon-increase-nesting-level,\r\n.trix-button--icon-attach,\r\nspan[data-trix-button-group=\"file-tools\"] {\r\n    display: none;\n}\r\n", ""]);
 
 // exports
 
@@ -80766,6 +80771,14 @@ var render = function() {
       _c("div", { staticClass: "card-header" }, [
         _c("div", { staticClass: "level" }, [
           _c("h5", { staticClass: "flex" }, [
+            _c("img", {
+              attrs: {
+                src: _vm.reply.owner.avatar_path,
+                width: "25",
+                height: "25"
+              }
+            }),
+            _vm._v(" "),
             _c("a", {
               attrs: { href: "/profiles/" + _vm.reply.owner.name },
               domProps: { textContent: _vm._s(_vm.reply.owner.name) }
