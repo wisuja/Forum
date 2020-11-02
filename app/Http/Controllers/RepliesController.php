@@ -15,7 +15,7 @@ class RepliesController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
-        $this->limit = 5;
+        $this->limit = 2000;
     }
 
     public function index($channelId, Thread $thread)
