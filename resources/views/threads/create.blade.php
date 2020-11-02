@@ -20,6 +20,19 @@
                         </div>
                     @endif
 
+                    @if (auth()->user()->isAdmin())
+                      <form action="/channels" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="name">Channel Name</label>
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Add channel</button>
+                        </div>
+                      </form>
+                    @endif
+
                     <form action="/threads" method="POST">
                       @csrf
                       <div class="form-group">
