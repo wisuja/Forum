@@ -120,6 +120,7 @@ return [
     
     // Custom
     'spamfree' => 'The :attribute contains spam',
+    'recaptcha' => "Please verify the recaptcha field.",
     
     /*
     |--------------------------------------------------------------------------
