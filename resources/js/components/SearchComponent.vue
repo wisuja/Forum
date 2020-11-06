@@ -75,9 +75,6 @@ export default {
 </script>
 
 <style>
-.ais-InfiniteHits {
-}
-
 .ais-InfiniteHits-list {
     display: block;
     width: 100%;
