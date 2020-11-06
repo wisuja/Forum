@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head')
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -38,6 +42,24 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITEKEY') }}"></div>
+                            </div>
+                        </div>
+
+                        @if (count($errors))
+                            <div class="form-group row">
+                                <div class="col-md-6 offset-md-4">
+                                    <ul class="alert alert-danger">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">

@@ -44,13 +44,16 @@ class ThreadsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Recaptcha $recaptcha)
+    public function store()
     {
         request()->validate([
             'title' => ['required', 'spamfree', 'max:255'],
             'body' => ['required', 'spamfree'],
             'channel_id' => ['required', 'exists:channels,id'],
-            'g-recaptcha-response' => ['required', $recaptcha]
+            'g-recaptcha-response' => ['required', 'recaptcha']
+        ],
+        [
+            'g-recaptcha-response.required' => "Please fill the recaptcha."
         ]);
 
         $thread = Thread::create([
