@@ -33,6 +33,8 @@
     @else
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
     @endif
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.0/trix.css">
     
     <style>
         body {
@@ -55,9 +57,11 @@
         .no-margin {
             margin: 0;
         }
-    </style>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.0/trix.css">
+        ul {
+            list-style: none;
+        }
+    </style>
 
     @yield('head')
 </head>
