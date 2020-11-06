@@ -72,6 +72,9 @@ export default {
                     this.$emit("created", data);
                 })
                 .catch(({ response: { data } }) => {
+                    this.body = "";
+                    this.completed = true;
+
                     flash(data, "danger");
                 });
         },
