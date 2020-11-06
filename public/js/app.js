@@ -8913,6 +8913,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.$emit("created", data);
       })["catch"](function (_ref2) {
         var data = _ref2.response.data;
+        _this.body = "";
+        _this.completed = true;
         flash(data, "danger");
       });
     },
@@ -13660,7 +13662,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.ais-InfiniteHits {\n}\n.ais-InfiniteHits-list {\r\n    display: block;\r\n    width: 100%;\n}\n.ais-InfiniteHits-item {\r\n    width: 100%;\r\n    overflow: hidden;\n}\n.ais-Highlight {\r\n    word-wrap: break-word;\n}\r\n", ""]);
+exports.push([module.i, "\n.ais-InfiniteHits-list {\r\n    display: block;\r\n    width: 100%;\n}\n.ais-InfiniteHits-item {\r\n    width: 100%;\r\n    overflow: hidden;\n}\n.ais-Highlight {\r\n    word-wrap: break-word;\n}\r\n", ""]);
 
 // exports
 
