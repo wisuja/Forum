@@ -33,6 +33,20 @@
                             required
                         ></textarea> -->
                     </div>
+                    <div class="form-group">
+                        <img
+                            :src="image.src"
+                            alt=""
+                            width="200"
+                            height="200"
+                            v-if="image.src !== null"
+                        />
+                        <image-upload
+                            name="image"
+                            class="form-control-file mt-3"
+                            @loaded="onLoad"
+                        ></image-upload>
+                    </div>
 
                     <button class="btn btn-sm btn-primary" type="submit">
                         Update
@@ -46,7 +60,16 @@
                     </button>
                 </form>
             </div>
-            <div v-else v-html="body"></div>
+            <div v-else>
+                <div v-html="body"></div>
+                <img
+                    :src="image.src"
+                    alt=""
+                    width="200"
+                    height="200"
+                    v-if="image.src !== null"
+                />
+            </div>
         </div>
         <div class="card-footer" v-if="authorize('owns', reply)">
             <div class="level">
@@ -75,10 +98,11 @@
 <script>
 import Favorite from "./FavoriteComponent.vue";
 import moment from "moment";
+import ImageUpload from "./ImageUploadComponent.vue";
 
 export default {
     props: ["reply"],
-    components: { Favorite },
+    components: { Favorite, ImageUpload },
     computed: {
         ago() {
             return moment(this.reply.created_at).fromNow();
@@ -93,15 +117,25 @@ export default {
         return {
             editing: false,
             id: this.reply.id,
-            body: this.reply.body
+            body: this.reply.body,
+            image: {
+                src: this.reply.image_path,
+                file: null
+            }
             // isBest: this.reply.isBest
         };
     },
     methods: {
         update() {
+            let data = new FormData();
+            data.append("body", this.body);
+
+            if (this.image.file !== null) data.append("image", this.image.file);
+
             axios
-                .patch("/replies/" + this.id, {
-                    body: this.body
+                .post("/replies/" + this.id, data, {
+                    processData: false,
+                    contentType: "multipart/form-data"
                 })
                 .then(() => {
                     this.editing = false;
@@ -120,6 +154,11 @@ export default {
         cancel() {
             this.editing = false;
             this.body = this.reply.body;
+        },
+
+        onLoad(image) {
+            this.image.src = image.src;
+            this.image.file = image.file;
         }
         // markBestReply() {
         //     axios
