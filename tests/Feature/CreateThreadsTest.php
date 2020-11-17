@@ -87,7 +87,8 @@ class CreateThreadsTest extends TestCase
         
         $thread = $this->postJson(route('threads'), $thread->toArray() + ['g-recaptcha-response' => 'token'])->json();
 
-        $this->assertEquals("some-title-24-{$thread['id']}", $thread['slug']);    }
+        $this->assertEquals("some-title-24-{$thread['id']}", $thread['slug']);    
+    }
 
     public function test_a_thread_require_a_body()
     {
