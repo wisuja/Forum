@@ -1,10 +1,11 @@
 <script>
 import Replies from "../components/RepliesComponent.vue";
 import SubscribeButton from "../components/SubscribeButtonComponent.vue";
+import ImageUpload from "../components/ImageUploadComponent.vue";
 
 export default {
     props: ["thread"],
-    components: { Replies, SubscribeButton },
+    components: { Replies, SubscribeButton, ImageUpload },
     data() {
         return {
             repliesCount: this.thread.replies_count,
@@ -13,6 +14,10 @@ export default {
             form: {
                 title: this.thread.title,
                 body: this.thread.body
+            },
+            image: {
+                src: this.thread.image_path,
+                file: null
             }
         };
     },
@@ -24,10 +29,21 @@ export default {
         },
         update() {
             let uri = `/threads/${this.thread.channel.slug}/${this.thread.slug}`;
+
+            let data = new FormData();
+            data.append("title", this.form.title);
+            data.append("body", this.form.body);
+
+            if (this.image.file !== null) data.append("image", this.image.file);
+
             axios
-                .patch(uri, this.form)
+                .post(uri, data, {
+                    processData: false,
+                    contentType: "multipart/form-data"
+                })
                 .then(() => {
                     this.editing = false;
+
                     flash("Your thread has been updated.");
                 })
                 .catch(error => {
@@ -50,6 +66,11 @@ export default {
         updateFormPanel(item) {
             this.repliesCount++;
             this.locked = item.isThreadLocked;
+        },
+
+        onLoad(image) {
+            this.image.src = image.src;
+            this.image.file = image.file;
         }
     }
 };
