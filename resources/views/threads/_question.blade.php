@@ -9,7 +9,24 @@
   </div>
 
   <div class="card-body">
-    <wysiwyg name="body" v-model="form.body" :value="form.body"></wysiwyg>
+    <div class="form-group">
+      <wysiwyg name="body" v-model="form.body" :value="form.body"></wysiwyg>
+    </div>
+
+    <div class="form-group">
+        <img
+            :src="image.src"
+            alt=""
+            width="200"
+            height="200"
+            v-if="image.src !== null"
+        />
+        <image-upload
+            name="image"
+            class="form-control-file mt-3"
+            @loaded="onLoad"
+        ></image-upload>
+    </div>
       <!-- <textarea rows="10" class="form-control" v-model="form.body" required></textarea> -->
   </div>
 
@@ -40,6 +57,13 @@
 
   <div class="card-body">
     <span v-html="form.body"></span>
+    <img
+        :src="image.src"
+        alt=""
+        width="200"
+        height="200"
+        v-if="image.src !== null"
+      />
   </div>
 
   @can('update', $thread)
