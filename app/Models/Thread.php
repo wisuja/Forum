@@ -124,6 +124,16 @@ class Thread extends Model
         return \Purifier::clean($body);
     }
 
+    public function getImagePathAttribute($image) {
+        if($image !== null) {
+            if (app()->environment('local')) {
+                return asset('/storage/' .  $image);
+            } else {
+                return secure_asset('/storage/' .  $image);
+            }
+        }
+    }
+
     public function hasUpdatesFor($user = null)
     {
         $user = $user ?: auth()->user();

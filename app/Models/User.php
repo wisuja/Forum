@@ -89,7 +89,7 @@ class User extends Authenticatable
     {
         $avatar = $avatar ?: 'avatars/default.jpg';
         
-        if (app()->environment('local')) {
+        if (app()->environment('local') || app()->environment('testing')) {
             return asset('/storage/' .  $avatar);
         } else {
             return secure_asset('/storage/' .  $avatar);

@@ -53,6 +53,16 @@ class Reply extends Model
         return \Purifier::clean($body);
     }
 
+    public function getImagePathAttribute($image) {
+        if($image !== null) {
+            if (app()->environment('local')) {
+                return asset('/storage/' .  $image);
+            } else {
+                return secure_asset('/storage/' .  $image);
+            }
+        }
+    }
+
     // public function isBest() 
     // {
     //     return $this->thread->best_reply_id == $this->id;
