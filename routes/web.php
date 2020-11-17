@@ -37,9 +37,10 @@ Route::get('/threads/create', [ThreadsController::class, 'create'])->middleware(
 Route::get('/threads/search', [SearchController::class, 'show']);
 Route::get('/threads/{channel}', [ThreadsController::class, 'index']);
 Route::get('/threads/{channel}/{thread}', [ThreadsController::class, 'show']);
-Route::patch('/threads/{channel}/{thread}', [ThreadsController::class, 'update']);
 Route::delete('/threads/{channel}/{thread}', [ThreadsController::class, 'destroy']);
 Route::post('/threads', [ThreadsController::class, 'store'])->middleware('must-be-confirmed');
+Route::post('/threads/{channel}/{thread}', [ThreadsController::class, 'update']); // Because PATCH does not support FormData
+Route::patch('/threads/{channel}/{thread}', [ThreadsController::class, 'update']); // For testing purposes
 
 Route::post('/channels', [ChannelsController::class, "store"]);
 
@@ -48,7 +49,8 @@ Route::delete('/locked-threads/{thread}', [LockedThreadsController::class, 'dest
 
 Route::get('/threads/{channel}/{thread}/replies', [RepliesController::class, 'index']);
 Route::post('/threads/{channel}/{thread}/replies', [RepliesController::class, 'store'])->middleware('must-be-confirmed');
-Route::patch('/replies/{reply}', [RepliesController::class, 'update']);
+Route::post('/replies/{reply}', [RepliesController::class, 'update']); // Because PATCH does not support FormData
+Route::patch('/replies/{reply}', [RepliesController::class, 'update']); // For testing purposes
 Route::delete('/replies/{reply}', [RepliesController::class, 'destroy']);
 
 Route::post('/threads/{channel}/{thread}/subscriptions', [ThreadSubscriptionsController::class, 'store']);
