@@ -20,6 +20,20 @@
                     required
                 ></textarea> -->
             </div>
+            <div class="form-group">
+                <img
+                    :src="image.src"
+                    alt=""
+                    width="200"
+                    height="200"
+                    v-if="image.src !== null"
+                />
+                <image-upload
+                    name="post-image"
+                    class="form-control-file mt-3"
+                    @loaded="onLoad"
+                ></image-upload>
+            </div>
             <button type="submit" class="btn btn-primary" @click="addReply">
                 Post
             </button>
@@ -36,12 +50,18 @@
 <script>
 import "at.js";
 import "jquery.caret";
+import ImageUpload from "./ImageUploadComponent.vue";
 
 export default {
+    components: { ImageUpload },
     data() {
         return {
             body: "",
-            completed: false
+            completed: false,
+            image: {
+                src: null,
+                file: null
+            }
         };
     },
     mounted() {
@@ -61,11 +81,20 @@ export default {
     },
     methods: {
         addReply() {
+            let data = new FormData();
+            data.append("image", this.image.file);
+            data.append("body", this.body);
+
             axios
-                .post(location.pathname + "/replies", { body: this.body })
+                .post(location.pathname + "/replies", data, {
+                    processData: false,
+                    contentType: "multipart/form-data"
+                })
                 .then(({ data }) => {
                     this.body = "";
                     this.completed = true;
+                    this.image.src = null;
+                    this.image.file = null;
 
                     flash("Your reply has been posted.");
 
@@ -80,6 +109,10 @@ export default {
         },
         resetCompleted() {
             this.completed = false;
+        },
+        onLoad(image) {
+            this.image.src = image.src;
+            this.image.file = image.file;
         }
     }
 };
