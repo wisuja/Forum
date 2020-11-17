@@ -56,12 +56,24 @@ class ThreadsController extends Controller
             'g-recaptcha-response.required' => "Please fill the recaptcha."
         ]);
 
-        $thread = Thread::create([
-            'user_id' => auth()->id(),
-            'channel_id' => request('channel_id'),
-            'title' => request('title'),
-            'body' => request('body')
-        ]);
+        $thread = null;
+
+        if(request()->hasFile('image')) {
+            $thread = Thread::create([
+                'user_id' => auth()->id(),
+                'channel_id' => request('channel_id'),
+                'title' => request('title'),
+                'body' => request('body'),
+                'image_path' => request()->file('image')->store('images', 'public')
+            ]);
+        } else {
+            $thread = Thread::create([
+                'user_id' => auth()->id(),
+                'channel_id' => request('channel_id'),
+                'title' => request('title'),
+                'body' => request('body')
+            ]);
+        }
 
         if(request()->wantsJson()) {
             return response($thread, 201);
@@ -112,10 +124,28 @@ class ThreadsController extends Controller
     {
         $this->authorize('update', $thread);
 
-        $thread->update(request()->validate([
+        request()->validate([
             'title' => ['required', 'spamfree', 'max:255'],
-            'body' => ['required', 'spamfree'],
-        ]));
+            'body' => ['required', 'spamfree']
+        ]);
+
+        if (request()->hasFile('image')) {
+            request()->validate([
+                'image' => ['image'],
+            ]);
+
+            $thread->update([
+                'body' => request('body'), 
+                'image_path' => request()->file('image')->store('images', 'public')
+            ]);
+
+            return $thread;
+        }
+
+        $thread->update([
+            'title' => request('title'),
+            'body' => request('body')
+        ]);
 
         return $thread;
     }

@@ -25,25 +25,39 @@ class RepliesController extends Controller
 
     public function store($channelSlug, Thread $thread, CreateReplyRequest $req)
     {
-        if($thread->locked) {
-            return response('Thread is locked', 422);
-        }
-
-        $reply = $thread->addReply([
-            'body' => request('body'),
-            'user_id' => auth()->id()
-        ]);
-
-        tap($thread->fresh(), function ($thread) {
-            if($thread->replies_count > $this->limit) {
-                $thread->update(['locked' => true]);
+        try {
+            if($thread->locked) {
+                return response('Thread is locked', 422);
             }
-        });
-        $reply = $reply->load('owner');
-
-        $reply->isThreadLocked = $thread->fresh()->locked;
-
-        return $reply;
+    
+            if(request()->hasFile('image')) {
+                request()->validate(['image' => ['image']]);
+    
+                $reply = $thread->addReply([
+                    'body' => request('body'),
+                    'user_id' => auth()->id(),
+                    'image_path' => request()->file('image')->store('images', 'public')
+                ]);
+            } else {
+                $reply = $thread->addReply([
+                    'body' => request('body'),
+                    'user_id' => auth()->id()
+                ]);
+            }
+    
+            tap($thread->fresh(), function ($thread) {
+                if($thread->replies_count > $this->limit) {
+                    $thread->update(['locked' => true]);
+                }
+            });
+            $reply = $reply->load('owner');
+    
+            $reply->isThreadLocked = $thread->fresh()->locked;
+    
+            return $reply;
+        } catch(Exception $ex) {
+            return response('Sorry, your reply could not be saved at this moment.', 422);
+        }
     }
 
     public function update(Reply $reply)
@@ -51,9 +65,24 @@ class RepliesController extends Controller
         $this->authorize('update', $reply);
 
         try {
-            $reply->update(request()->validate([
+            request()->validate([
                 'body' => ['required', 'spamfree']
-            ]));
+            ]);
+
+            if(request()->hasFile('image')) {
+                request()->validate([
+                    'image' => ['image'],
+                ]);
+
+                $reply->update([
+                    'body' => request('body'), 
+                    'image_path' => request()->file('image')->store('images', 'public')
+                ]);
+
+                return $reply;
+            }
+
+            $reply->update(['body' => request('body')]);
 
             return $reply;
         } catch (Exception $ex) {
