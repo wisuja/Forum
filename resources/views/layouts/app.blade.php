@@ -74,5 +74,7 @@
 
         <flash message="{{ session('flash') }}"></flash>
     </div>
+
+    @yield('script')
 </body>
 </html>

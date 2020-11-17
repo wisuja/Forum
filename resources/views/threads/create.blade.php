@@ -33,7 +33,7 @@
                       </form>
                     @endif
 
-                    <form action="/threads" method="POST">
+                    <form action="/threads" method="POST" enctype="multipart/form-data">
                       @csrf
                       <div class="form-group">
                         <label for="channel_id">Choose a channel:</label>
@@ -57,6 +57,10 @@
                         {{-- <textarea name="body" id="body" class="form-control" rows="5" required>{{ old('body') }}</textarea> --}}
                       </div>
                       <div class="form-group">
+                        <img src="" id="img" style="display:block">
+                        <input type="file" name="image" id="img" onchange="loadPreview(this)">
+                      </div>
+                      <div class="form-group">
                         <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITEKEY') }}"></div>
                       </div>
                       <div class="form-group">
@@ -78,4 +82,22 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    
+<script>
+  function loadPreview(input) {
+    if (input.files && input.files[0]) {
+      let reader = new FileReader();
+      reader.onload = function (e) {
+        $('#img')
+        .attr('src', e.target.result)
+        .width(200)
+        .height(200);
+      };
+      reader.readAsDataURL(input.files[0]);
+    };
+  }
+  </script>
 @endsection
