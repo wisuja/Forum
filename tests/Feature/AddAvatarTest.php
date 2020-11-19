@@ -20,7 +20,7 @@ class AddAvatarTest extends TestCase
     {
         $this->signIn();
 
-        $this->json('POST', '/api/users/' . auth()->id() . '/avatar', [
+        $this->json('POST', route('avatar', auth()->id()), [
             'avatar' => 'not_an_image'
         ])->assertStatus(422);
     }
@@ -31,7 +31,7 @@ class AddAvatarTest extends TestCase
 
         Storage::fake('public');
 
-        $this->json('POST', '/api/users/' . auth()->id() . '/avatar', [
+        $this->json('POST', route('avatar', auth()->id()), [
             'avatar' => $file = UploadedFile::fake()->image('avatar.jpg')
         ]);
 
