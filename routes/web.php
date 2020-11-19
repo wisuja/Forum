@@ -13,6 +13,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ThreadsController;
 use App\Http\Controllers\ThreadSubscriptionsController;
 use App\Http\Controllers\UserNotificationsController;
+use App\Http\Controllers\Api\UserStarsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,6 +66,7 @@ Route::delete('/profiles/{user}/notifications/{notification}', [UserNotification
 
 Route::get('/api/users', [UsersController::class, 'index']);
 Route::post('/api/users/{user}/avatar', [UserAvatarsController::class, 'store'])->name('avatar');
+Route::post('/api/users/{user}/stars', [UserStarsController::class, 'store']);
 
 Route::get('/register/confirm', [RegisterConfirmationsController::class, 'index'])->name('register.confirm');
 
