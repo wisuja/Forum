@@ -62,13 +62,9 @@
             </div>
             <div v-else>
                 <div v-html="body"></div>
-                <img
-                    :src="image.src"
-                    alt=""
-                    width="200"
-                    height="200"
-                    v-if="image.src !== null"
-                />
+                <div v-if="image.src !== null && image.src !== undefined">
+                    <img :src="image.src" alt="" width="200" height="200" />
+                </div>
             </div>
         </div>
         <div class="card-footer" v-if="authorize('owns', reply)">
