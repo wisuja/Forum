@@ -31,8 +31,8 @@ This is a forum app built using Laravel 8
 -   [x] A thread auto locked itself when it has 2k replies
 -   [x] User can post code in post / reply
 -   [x] Administrator can create channels
--   [] User can post pictures in post / reply
--   [] User can give other users stars. (Limited to 3 daily)
+-   [x] User can post pictures in post / reply
+-   [x] User can give other users stars. (Limited to 3 daily)
 
 ## Disabled
 
