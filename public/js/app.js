@@ -8786,10 +8786,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -81026,15 +81022,17 @@ var render = function() {
           : _c("div", [
               _c("div", { domProps: { innerHTML: _vm._s(_vm.body) } }),
               _vm._v(" "),
-              _vm.image.src !== null
-                ? _c("img", {
-                    attrs: {
-                      src: _vm.image.src,
-                      alt: "",
-                      width: "200",
-                      height: "200"
-                    }
-                  })
+              _vm.image.src !== null && _vm.image.src !== undefined
+                ? _c("div", [
+                    _c("img", {
+                      attrs: {
+                        src: _vm.image.src,
+                        alt: "",
+                        width: "200",
+                        height: "200"
+                      }
+                    })
+                  ])
                 : _vm._e()
             ])
       ]),
